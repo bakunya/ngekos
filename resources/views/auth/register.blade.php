@@ -18,14 +18,16 @@
                     <p class="auth-subtitle mb-5">
                         Input your data to register to our website.
                     </p>
-                    {{ count($errors) > 0 ? dd($errors->first('email')) : '' }}
                     <form action="{{ route('POST.register') }}" method="POST">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-xl" placeholder="Email" name="email" />
+                            <input type="text" class="{{ $errors->first('email') }} form-control form-control-xl" placeholder="Email" name="email" />
                             <div class="form-control-icon">
                                 <i class="bi bi-envelope"></i>
                             </div>
+                            <p class="text-danger mt-2">
+                                {{ $errors->first('email') }}
+                            </p>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="text" class="form-control form-control-xl" placeholder="Full Name" name="fullname" />
