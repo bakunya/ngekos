@@ -18,7 +18,7 @@ Route::prefix('/register')->middleware('guest')->group(function ()
 {
     Route::get('/', [Register::class, 'index'])
         ->name('GET.register');
-    Route::post('/', [Register::class, 'index'])
+    Route::post('/', [Register::class, 'register'])
         ->name('POST.register');
 });
 

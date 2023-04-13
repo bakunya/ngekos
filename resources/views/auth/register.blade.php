@@ -18,28 +18,29 @@
                     <p class="auth-subtitle mb-5">
                         Input your data to register to our website.
                     </p>
-
-                    <form action="index.html">
+                    {{ count($errors) > 0 ? dd($errors->first('email')) : '' }}
+                    <form action="{{ route('POST.register') }}" method="POST">
+                        @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-xl" placeholder="Email" />
+                            <input type="text" class="form-control form-control-xl" placeholder="Email" name="email" />
                             <div class="form-control-icon">
                                 <i class="bi bi-envelope"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-xl" placeholder="Username" />
+                            <input type="text" class="form-control form-control-xl" placeholder="Full Name" name="fullname" />
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-xl" placeholder="Password" />
+                            <input type="password" class="form-control form-control-xl" placeholder="Password" name="password" />
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-xl" placeholder="Confirm Password" />
+                            <input type="password" class="form-control form-control-xl" placeholder="Confirm Password" name="confirm_password" />
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
