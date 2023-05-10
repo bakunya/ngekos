@@ -18,3 +18,10 @@ Route::get('/', function () {
 });
 
 include_once base_path('routes/for/auth.php');
+
+include_once base_path('routes/for/manage-penyewa.php');
+include_once base_path('routes/for/manage-pemilik.php');
+
+include_once base_path('routes/for/dashboard.php');
+include_once base_path('routes/for/dashboard-pemilik.php');
+include_once base_path('routes/for/dashboard-penyewa.php');

@@ -14,24 +14,25 @@
                     <div class="auth-logo">
                         <a href="index.html"><img src="./assets/compiled/svg/logo.svg" alt="Logo" /></a>
                     </div>
-                    <h1 class="auth-title">Lupa Password</h1>
+                    <h1 class="auth-title">Reset Password</h1>
                     <p class="auth-subtitle mb-5">
-                        Masukkan email Kamu dan kami akan mengirimkan link reset password.
+                        Masukkan password baru kamu dengan panjang minimal 8 karakter.
                     </p>
 
-                    <form action="{{ route('POST.forgot-password') }}" method="post">
+                    <form action="{{ route('POST.reset-password') }}" method="post">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="email" class="form-control form-control-xl @error('email') is-invalid @enderror"
-                                placeholder="Email" id="email" name="email" required
-                                value="{{ old('email') }}" />
+                            <input type="hidden" name="ref" value="{{ $ref }}">
+                            <input type="password" class="form-control form-control-xl @error('password') is-invalid @enderror"
+                                placeholder="New password..." id="password" name="password" required
+                                value="{{ old('password') }}" />
                             <div class="form-control-icon">
-                                <i class="bi bi-envelope"></i>
+                                <i class="bi bi-lock"></i>
                             </div>
                             <div class="invalid-feedback">
                                 <i class="bx bx-radio-circle"></i>
-                                @error('email')
-                                    {{ $errors->get('email')[0] }}
+                                @error('password')
+                                    {{ $errors->get('password')[0] }}
                                 @enderror
                             </div>
                         </div>

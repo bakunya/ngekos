@@ -63,5 +63,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'verificated-email' => \App\Http\Middleware\RequiredVerificatedEmail::class,
+        'logout-if-has-ref-query' => \App\Http\Middleware\LogoutIfHasRefQuery::class,
     ];
 }
