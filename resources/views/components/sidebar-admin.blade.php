@@ -81,6 +81,22 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="sidebar-item has-sub {{ $active_nav === 'kos' ? 'active' : '' }}">
+                    <a href="#" class="sidebar-link">
+                        <i class="bi bi-person-fill"></i>
+                        <span>Bangunan Kos</span>
+                    </a>
+
+                    <ul class="submenu">
+                        <li class="submenu-item {{ $active_subnav === 'data-kos' ? 'active' : '' }}">
+                            <a href="{{ route('GET.admin.kos.index') }}" class="submenu-link">Data Kos</a>
+                        </li>
+                        <li class="submenu-item {{ $active_subnav === 'buat-kos' ? 'active' : '' }}">
+                            <a href="{{ route('GET.admin.kos.create') }}" class="submenu-link">Buat Baru</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

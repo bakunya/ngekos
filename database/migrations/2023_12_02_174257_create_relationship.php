@@ -10,15 +10,20 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {       
+    {        
+        Schema::table('image_urls', function (Blueprint $table)
+        {
+            $table->foreignId('id_post')->constrained('post')->onDelete('cascade')->onUpdate('restrict');
+        });
+
         Schema::table('pemilik', function (Blueprint $table)
         {
-             $table->foreignId('id_user')->unique()->constrained('users')->onDelete('cascade')->onUpdate('restrict');
+            $table->foreignId('id_user')->unique()->constrained('users')->onDelete('cascade')->onUpdate('restrict');
         });
         
         Schema::table('penyewa', function (Blueprint $table)
         {
-             $table->foreignId('id_user')->unique()->constrained('users')->onDelete('cascade')->onUpdate('restrict');
+            $table->foreignId('id_user')->unique()->constrained('users')->onDelete('cascade')->onUpdate('restrict');
         });
 
         Schema::table('kontrak_sewa', function (Blueprint $table)
@@ -31,7 +36,7 @@ return new class extends Migration
 
         Schema::table('post', function (Blueprint $table)
         {
-            $table->foreignId('id_child_post')->constrained('post')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreignId('id_child_post')->nullable()->default(null)->constrained('post')->onDelete('cascade')->onUpdate('restrict');
         });
 
         Schema::table('kamar', function (Blueprint $table)

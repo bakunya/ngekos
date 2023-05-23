@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 include_once base_path('routes/for/auth.php');
 
+include_once base_path('routes/for/manage-kos.php');
 include_once base_path('routes/for/manage-penyewa.php');
 include_once base_path('routes/for/manage-pemilik.php');
 
