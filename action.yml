@@ -8,4 +8,7 @@ inputs:
   key:
     description: 'ssh private key'
 runs:
-  description: 'ssh private key'
+  using: "composite"
+  steps:
+    - name: Langkah 1
+      run: echo "Menjalankan langkah 1"
