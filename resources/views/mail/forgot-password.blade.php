@@ -21,7 +21,7 @@
         </ul>
         <div class="row gap-2 mt-5">
             <div class="col-12 mt-2">
-                <a class="btn btn-primary container" href="{{ route('GET.reset-password', ['ref' => $uid]) }}">Reset Password</a>
+                <a class="btn btn-primary container" href="{{ route('GET.reset-password', ['token' => $uid]) }}">Reset Password</a>
             </div>
         </div>
         <p class="text-dark mt-5">Jika tidak ingin melakukan Reset Password, Kamu dapat mengabaikan pesan ini.</p>

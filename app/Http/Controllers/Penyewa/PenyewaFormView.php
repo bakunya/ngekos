@@ -31,7 +31,7 @@ class PenyewaFormView extends Controller
             'subtitle' => 'Buat data penyewa baru',
             'current' => 'Buat Penyewa',
             'action' => route('POST.admin.penyewa.update.id', ['id' => $id]),
-            'curr' => $model->select("email", "fullname", "telp")->join('users', 'penyewa.id_user', 'users.id')->first($id)
+            'curr' => $model->select("email", "fullname", "telp")->join('users', 'penyewa.id_user', 'users.id')->find($id)
         ]);
     }
 }

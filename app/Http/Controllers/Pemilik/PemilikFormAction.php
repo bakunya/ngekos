@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pemilik;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pemilik\PemilikStore;
 use App\Http\Requests\Pemilik\PemilikUpdate;
+use App\Jobs\SendMailJob;
 use App\Models\Pemilik;
 use App\Models\User;
 use App\Traits\SendMail;
@@ -39,7 +40,7 @@ class PemilikFormAction extends Controller
             $model_pemilik->save();
         });
 
-        $this->sendMail(
+        SendMailJob::dispatchAfterResponse(
             to: $req->email,
             subject: 'Verifikasi Email',
             view: 'mail.verify-mail',
@@ -91,7 +92,7 @@ class PemilikFormAction extends Controller
         // create transaction to insert in both model
         $model_user->getConnection()->transaction(function () use ($model_user, $model_pemilik, $id)
         {
-            $curr = $model_pemilik->select('id_user')->first($id);
+            $curr = $model_pemilik->select('id_user')->find($id);
             $model_user->find($curr->id_user)->delete();
         });
 

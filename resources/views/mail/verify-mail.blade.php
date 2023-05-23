@@ -24,10 +24,10 @@
         </ul>
         <div class="row gap-2 mt-5">
             <div class="col-12">
-                <a class="btn btn-primary container" href="{{ route('GET.login', ['ref' => $uid]) }}">Login</a>
+                <a class="btn btn-primary container" href="{{ route('GET.login', ['token' => $uid]) }}">Login</a>
             </div>
             <div class="col-12 mt-2">
-                <a class="d-block text-decoration-underline text-center container" href="{{ route('GET.reset-password', ['ref' => $uid]) }}">Reset Password</a>
+                <a class="d-block text-decoration-underline text-center container" href="{{ route('GET.reset-password', ['token' => $uid]) }}">Reset Password</a>
             </div>
         </div>
         <p class="text-dark mt-5">Jika tidak ingin melakukan Reset Password, Kamu dapat mengabaikan pesan ini.</p>

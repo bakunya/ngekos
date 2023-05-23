@@ -14,7 +14,7 @@ class Login extends Controller
 
     public function index(Request $req)
     {  
-        if($req->query('ref')) (new VerificateUserByRef)->runWithDeleteCurrentSentMail($req->query('ref'));
+        if($req->query('token')) (new VerificateUserByRef)->runWithDeleteCurrentSentMail($req->query('token'));
         return view('auth.login');
     }
 

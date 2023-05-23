@@ -22,7 +22,7 @@
                     <form action="{{ route('POST.reset-password') }}" method="post">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="hidden" name="ref" value="{{ $ref }}">
+                            <input type="hidden" name="token" value="{{ $token }}">
                             <input type="password" class="form-control form-control-xl @error('password') is-invalid @enderror"
                                 placeholder="New password..." id="password" name="password" required
                                 value="{{ old('password') }}" />

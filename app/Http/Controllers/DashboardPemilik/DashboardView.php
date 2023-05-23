@@ -8,6 +8,8 @@ class DashboardView extends Controller
 {
     public function index()
     {        
-        dd('asdasdsad');
+        return view('dashboard.pemilik', [
+            'active_nav' => 'dashboard',
+        ]);
     }
 }

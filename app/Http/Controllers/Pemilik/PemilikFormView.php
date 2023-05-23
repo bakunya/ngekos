@@ -31,7 +31,7 @@ class PemilikFormView extends Controller
             'subtitle' => 'Buat data admin baru',
             'current' => 'Buat Admin',
             'action' => route('POST.admin.pemilik.update.id', ['id' => $id]),
-            'curr' => $model->select("email", "fullname", "telp", "alamat", "nik")->join('users', 'pemilik.id_user', 'users.id')->first($id)
+            'curr' => $model->select("email", "fullname", "telp", "alamat", "nik")->join('users', 'pemilik.id_user', 'users.id')->find($id)
         ]);
     }
 }

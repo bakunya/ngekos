@@ -42,12 +42,11 @@ trait SendMail {
             new Envelope(subject: $subject, to: $to),
             new Content(
                 view: $view, 
-                with: [
-                    ...$view_data, 
+                with: array_merge($view_data, [ 
                     'uid' => Crypt::encrypt($uid),
                     'from_admin' => $from_admin, 
                     'expired_at' => $mail_expired,
-                ]
+                ]), 
             )
         ));
     }
