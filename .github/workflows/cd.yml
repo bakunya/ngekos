@@ -13,8 +13,8 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: 22
+          password: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
           script: |
             cd /www/wwwroot/ngekos
             git pull origin master
