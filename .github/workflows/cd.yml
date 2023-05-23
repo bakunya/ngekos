@@ -14,7 +14,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
           script: |
             cd /www/wwwroot/ngekos
             git pull origin master
