@@ -1,11 +1,7 @@
 name: 'Ngekos CD'
 author: 'Bakunya | Kirisaki Rem'
-inputs:
-  host:
-    description: 'ssh host'
-    default: "192.168.0.1"
 runs:
   using: "composite"
   steps:
     - name: Langkah 1
-      run: echo "Menjalankan langkah 1, host input: ${{ inputs.host }}"
+      run: echo "Menjalankan langkah 1"
