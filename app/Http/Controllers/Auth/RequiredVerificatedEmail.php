@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Traits\SendMail;
 use Illuminate\Http\Request;
 
@@ -10,8 +11,10 @@ class RequiredVerificatedEmail extends Controller
 {
     use SendMail;
 
-    public function index(Request $request)
+    public function index(Request $req)
     {
+        $isVerified = User::findOrFail($req->session()->get('id_user'))->email_verified_at;
+        if(!empty($isVerified)) return redirect()->to(route('GET.dashboard'));
         return view('auth.required-verificated-email');
     }
 
