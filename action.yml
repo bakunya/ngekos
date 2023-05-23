@@ -1,7 +1,0 @@
-name: 'Ngekos CD'
-author: 'Bakunya | Kirisaki Rem'
-runs:
-  using: "composite"
-  steps:
-    - name: Langkah 1
-      run: echo "Menjalankan langkah 1"
