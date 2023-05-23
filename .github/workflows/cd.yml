@@ -16,7 +16,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             cd /www/wwwroot/ngekos
-            git pull origin master
+            echo '${{ secrets.PASSWORD_GIT }}' | git pull origin master
             git status
             composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
             echo "DONE!!"
