@@ -11,9 +11,9 @@ jobs:
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
+          host: "${{ secrets.HOST }}"
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
           script: |
             cd /www/wwwroot/ngekos
             git pull origin master
