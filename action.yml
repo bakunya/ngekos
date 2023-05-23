@@ -1,0 +1,9 @@
+name: 'Ngekos CD'
+author: 'Bakunya | Kirisaki Rem'
+inputs:
+  host:
+    description: 'ssh host'
+  port:
+    description: 'ssh port'
+  key:
+    description: 'ssh private key'

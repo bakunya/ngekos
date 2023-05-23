@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy using ssh
-        uses: bakunya/ngekos@master@v3
+        uses: bakunya/ngekos@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
