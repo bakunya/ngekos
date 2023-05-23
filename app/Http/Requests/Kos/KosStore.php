@@ -22,6 +22,7 @@ class KosStore extends FormRequest
     public function rules(): array
     {
         return [
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'post' => 'string'
         ];
     }
