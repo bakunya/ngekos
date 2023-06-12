@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\View;
 use Spatie\Browsershot\Browsershot;
 use Twilio\Rest\Client;
 
-
-
 class KontrakController extends Controller
 {
     public function lihat()
@@ -52,28 +50,31 @@ class KontrakController extends Controller
             ->where('status', 'belum disewa')
             ->whereNotIn('id', function ($query) {
                 $query->select('kamar_id')->from('kontraks');
-            })->get();
-        return view('kontrak/addKontrak',  compact('penyewa', 'kamar', 'kos'));
+            })
+            ->get();
+        return view('kontrak/addKontrak', compact('penyewa', 'kamar', 'kos'));
     }
     public function store(Request $request, $id)
     {
-
-        $request->validate([
-            'penyewa_id' => 'required|unique:kontraks',
-            'kamar_id' => 'required|unique:kontraks',
-            'tgl_mulai' => 'required',
-            'tgl_selesai' => 'required',
-        ], [
-            'penyewa_id.unique' => 'Penyewa sudah ada',
-            'kamar_id.unique' => 'Kamar sudah ada',
-            'tgl_mulai.required' => 'Tanggal mulai harus diisi',
-            'tgl_selesai.required' => 'Tanggal selesai harus diisi',
-        ]);
+        $request->validate(
+            [
+                'penyewa_id' => 'required|unique:kontraks',
+                'kamar_id' => 'required|unique:kontraks',
+                'tgl_mulai' => 'required',
+                'tgl_selesai' => 'required',
+            ],
+            [
+                'penyewa_id.unique' => 'Penyewa sudah ada',
+                'kamar_id.unique' => 'Kamar sudah ada',
+                'tgl_mulai.required' => 'Tanggal mulai harus diisi',
+                'tgl_selesai.required' => 'Tanggal selesai harus diisi',
+            ],
+        );
 
         DB::beginTransaction();
 
         // add kontrak
-        $kontrak = new Kontrak;
+        $kontrak = new Kontrak();
         $kontrak->penyewa_id = $request->penyewa_id;
         $kontrak->kamar_id = $request->kamar_id;
         $kontrak->tgl_mulai = $request->tgl_mulai;
@@ -103,7 +104,6 @@ class KontrakController extends Controller
         // $transaksi->kontrak_id = $kontrak->id;
         // $transaksi->save();
 
-
         DB::commit();
 
         if ($kontrak) {
@@ -125,7 +125,6 @@ class KontrakController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $kontrak = Kontrak::findOrFail($id);
         $kontrak->penyewa_id = $request->penyewa_id;
         $kontrak->kamar_id = $request->kamar_id;
@@ -166,7 +165,6 @@ class KontrakController extends Controller
 
     public function konfirmasi(Request $request, $id)
     {
-
         $kontrak = Kontrak::findOrFail($id);
         $kontrak->kode = $request->kode;
         $kontrak->tgl_bayar = $request->tgl_bayar;
@@ -186,13 +184,13 @@ class KontrakController extends Controller
     public function print($id)
     {
         $kontrak = Kontrak::findOrFail($id);
-        return  view('kontrak/print', compact('kontrak'));
+        return view('kontrak/print', compact('kontrak'));
     }
 
     public function tagih($id)
     {
         $kontrak = Kontrak::findOrFail($id);
-        return  view('kontrak/tagih', compact('kontrak'));
+        return view('kontrak/tagih', compact('kontrak'));
     }
     public function wa(Request $request, $id)
     {
@@ -200,13 +198,15 @@ class KontrakController extends Controller
         $pesan = $request->pesan;
 
         $request->validate([
-            'nomor' => 'numeric'
+            'nomor' => 'numeric',
         ]);
 
         $nomor = preg_replace('/[^0-9]/', '', $nomor);
 
         if (strlen($nomor) < 9 || strlen($nomor) > 15) {
-            return redirect()->back()->with('error', 'Nomor tidak valid');
+            return redirect()
+                ->back()
+                ->with('error', 'Nomor tidak valid');
         }
 
         $endcode = urlencode($nomor);
@@ -223,7 +223,6 @@ class KontrakController extends Controller
         $html = View::make('kontrak/print2', compact('kontrak'))->render();
         file_put_contents('debug.html', $html);
 
-
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'landscape');
@@ -231,60 +230,32 @@ class KontrakController extends Controller
         $dompdf->stream('invoice.pdf', ['Attachment' => false]);
     }
 
+    function cari(Request $request, $id)
+    {
+        $title = 'Data Kontrak';
+        $cari = $request->cari;
+        $id = $request->id;
 
-    // public function cari(Request $request, $id)
-    // {
-    //     $cari = $request->cari;
-
-    //     $kontrak = DB::table('kontraks')
-    //         ->select('kontraks.*', 'penyewa.nama as nama_penyewa', 'kamars.nama as nama_kamar')
-    //         ->join('penyewa', 'kontraks.penyewa_id', '=', 'penyewa.id')
-    //         ->join('kamars', 'kontraks.kamar_id', '=', 'kamars.id')
-    //         ->where('penyewa.nama', 'like', "%" . $cari . "%")
-    //         ->orWhere('kamars.nama', 'like', "%" . $cari . "%")
-
-    //         ->paginate(5);
-
-    //     return view(
-    //         'kontrak/listKontrak',
-    //         [
-    //             'kontrak' => $kontrak,
-    //             'id' => $id,
-    //             'cari' => $cari
-    //         ]
-    //     );
-    // // }
-    // public function cari1(Request $request, $kos_id)
-    // {
-    //     $keyword = $request->input('keyword');
-
-    //     $kontrak = Kontrak::with('penyewa', 'kamar')
-    //         ->whereHas('kamar', function ($query) use ($kos_id) {
-    //             $query->where(
-    //                 'kos_id',
-    //                 $kos_id
-    //             );
-    //         })
-    //         ->whereHas('penyewa', function ($query) use ($keyword) {
-    //             $query->where('nama', 'like', "%$keyword%");
-    //         })
-    //         ->paginate(5);
-
-    //     return view('kontrak/listKontrak', compact('kontrak', 'kos_id'));
-    // }
-    // public function cari(Request $request, $kos_id)
-    // {
-    //     $keyword = $request->input('keyword');
-
-    //     $kontrak = Kontrak::with('penyewa', 'kamar')
-    //         ->whereHas('kamar', function ($query) use ($kos_id) {
-    //             $query->where('kos_id', $kos_id);
-    //         })
-    //         ->whereHas('penyewa', function ($query) use ($keyword) {
-    //             $query->where('nama', 'like', "%$keyword%");
-    //         })
-    //         ->paginate(5);
-
-    //     return view('kontrak/listKontrak', compact('kontrak', 'kos_id'));
-    // }
+        if (isset($request->cari)) {
+            $kontrak = Kontrak::with('penyewa', 'kamar')
+                ->whereHas('kamar', function ($query) use ($id) {
+                    $query
+                        ->select('id')
+                        ->from('kamars')
+                        ->where('kos_id', $id);
+                })
+                ->where(function ($query) use ($cari) {
+                    $query->whereHas('penyewa', function ($query) use ($cari) {
+                        $query->where('nama', 'like', '%' . $cari . '%');
+                    })
+                        ->orWhereHas('kamar', function ($query) use ($cari) {
+                            $query->where('nama', 'like', '%' . $cari . '%');
+                        });
+                })
+                ->get();
+        } else {
+            return $this->index($id);
+        }
+        return view('kontrak/listKontrak', compact('kontrak', 'id', 'title'));
+    }
 }

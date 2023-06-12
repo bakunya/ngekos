@@ -12,37 +12,36 @@
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
-                <form action="/transaksi" method="get">
-                    <button class="btn btn-danger">reset</button>
-                </form>
             </div>
         </div>
         <!-- flash message insert -->
-        @if(Session::has('insert'))
+        @if (Session::has('insert'))
         <div class="alert alert-success mt-3">
-            {{ Session::get('pesan')}}
+            {{ Session::get('pesan') }}
         </div>
         @endif
 
         <!-- flash message update -->
-        @if(Session::has('update'))
+        @if (Session::has('update'))
         <div class="alert alert-success mt-3">
-            {{ Session::get('pesan')}}
+            {{ Session::get('pesan') }}
         </div>
         @endif
 
         <!-- flash message delete -->
-        @if(Session::has('delete'))
+        @if (Session::has('delete'))
         <div class="alert alert-danger mt-3">
-            {{ Session::get('pesan')}}
+            {{ Session::get('pesan') }}
         </div>
         @endif
     </div>
     <div class="d-flex justify-content-between">
-        <form action="/cari_bulan" method="post">
+        <form action="/filter_bulan" method="post">
             @csrf
+
+            <!-- filter bulan -->
             <div class="form-group">
-                <select name="bulan" class="form-control">
+                <select name="bulan" class="form-control mb-2 mt-2">
                     <option value="">Pilih Bulan</option>
                     @for ($i = 1; $i <= 12; $i++)
                     <option value="{{ $i }}">
@@ -51,14 +50,51 @@
                     @endfor
                 </select>
             </div>
+
+            <!-- filter tahun -->
             <div class="form-group">
-                <select name="tahun" class="form-control">
+                <select name="tahun" class="form-control mb-2">
                     <option value="">Pilih Tahun</option>
                     @for ($i = 2021; $i <= 2030; $i++)
                     <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
             </div>
+
+            <!-- filter kos -->
+            <div class="dropdown mb-4">
+                <button
+                    class="btn dropdown-toggle shadow-0 border border-secondary text-start"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-mdb-toggle="dropdown"
+                    aria-expanded="false"
+                >
+                    Pilih KOS
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        @foreach ($kos as $k)
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    value="{{ $k->id }}"
+                                    name="filter_kos[]"
+                                />
+                                <label
+                                    class="form-check-label"
+                                    for="filter_kos"
+                                    >{{ $k->nama }}</label
+                                >
+                            </div>
+                        </a>
+                        @endforeach
+                    </li>
+                </ul>
+            </div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">cari</button>
             </div>
@@ -81,11 +117,11 @@
         <tbody class="">
             <tr class="table-striped">
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $k->penyewa->nama}}</td>
-                <td>{{ $k->kamar->nama}}</td>
-                <td>{{ $k->tgl_bayar}}</td>
-                <td>Rp {{ $k->kamar->harga}}</td>
-                <td>{{ $k->status}}</td>
+                <td>{{ $k->penyewa->nama }}</td>
+                <td>{{ $k->kamar->nama }}</td>
+                <td>{{ $k->tgl_bayar }}</td>
+                <td>Rp {{ $k->kamar->harga }}</td>
+                <td>{{ $k->status }}</td>
             </tr>
         </tbody>
         @endforeach

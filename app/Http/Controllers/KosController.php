@@ -103,18 +103,15 @@ class KosController extends Controller
     public function cari(Request $request)
     {
         $title = 'Halaman List Kos';
-        $request->validate([
-            'cari' => 'required',
-        ], [
-            'cari.required' => 'Kolom pencarian wajib diisi',
-        ]);
-
         $cari = $request->cari;
 
-        $kos = DB::table('koss')
-            ->where('nama', 'like', "%" . $cari . "%")
-            ->orWhere('alamat', 'like', "%" . $cari . "%")
-            ->paginate(5);
+        if (isset($request->cari)) {
+            $kos = Kos::where('nama', 'like', "%" . $cari . "%")
+                ->orWhere('alamat', 'like', "%" . $cari . "%")
+                ->get();
+        } else {
+            return $this->index();
+        }
 
         return view('kos/listKos', compact('kos', 'title', 'cari'));
     }

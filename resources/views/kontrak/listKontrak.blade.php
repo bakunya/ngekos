@@ -13,7 +13,7 @@
                 </div>
                 <div class="d-flex">
                     <form
-                        action="{{ url('/kontrak/' . $id . '/cari') }}"
+                        action="{{ url('/cari-kontrak/' . $id . '/cari') }}"
                         method="get"
                         class="d-flex me-1"
                     >
@@ -22,7 +22,9 @@
                             name="cari"
                             class="form-control me-1"
                         />
-                        <button class="btn btn-primary">cari</button>
+                        <button class="btn btn-primary">
+                            <i class="bi bi-search"></i>
+                        </button>
                     </form>
                     <form action="/kontrak" method="get">
                         <button class="btn btn-danger">reset</button>
@@ -76,14 +78,16 @@
                         <a
                             href="/edit-kontrak/{{$k->id}}"
                             class="btn btn-success"
-                            >Edit</a
                         >
+                            <i class="bi bi-pencil-fill"></i
+                        ></a>
                         <a
                             href="/delete-kontrak/{{$k->id}}"
                             onclick="return confirm('Hapus data {{ $k->nama_penyewa }} ?')"
                             class="btn btn-danger"
-                            >Hapus</a
                         >
+                            <i class="bi bi-trash-fill"></i
+                        ></a>
                     </td>
                     <td>
                         <a

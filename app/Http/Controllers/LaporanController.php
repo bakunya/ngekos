@@ -15,56 +15,102 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\View;
 
-
 class LaporanController extends Controller
 {
     public function index()
     {
         $title = 'Halaman Laporan';
+        $kos = Kos::all();
         $kontrak = Kontrak::with('penyewa', 'kamar')->get();
-        return view('laporan/laporan', ['kontrak' => $kontrak], ['title' => $title]);
+        return view('laporan/laporan', compact('kontrak', 'title', 'kos'));
     }
 
-    public function cari_bulan(Request $request)
+    public function filter_bulan(Request $request)
     {
-        if ($request->bulan && $request->tahun) {
+        $title = 'Halaman Laporan';
+        $kos = Kos::all();
+
+        // filter kos, bulan, tahun
+        if (isset($request->filter_kos) && ($request->bulan || $request->tahun)) {
+            if ($request->bulan && $request->tahun) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereYear('tgl_bayar', $request->tahun)
+                    ->whereMonth('tgl_bayar', $request->bulan)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } elseif ($request->bulan) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereMonth('tgl_bayar', $request->bulan)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } elseif ($request->tahun) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereYear('tgl_bayar', $request->tahun)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } else {
+                $kos = Kos::all();
+                $kontrak = Kontrak::all();
+            }
+
+            // filter bulan, tahun
+        } elseif ($request->tahun || $request->bulan) {
+            if ($request->bulan && $request->tahun) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereYear('tgl_bayar', $request->tahun)
+                    ->whereMonth('tgl_bayar', $request->bulan)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } elseif ($request->bulan) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereMonth('tgl_bayar', $request->bulan)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } elseif ($request->tahun) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereYear('tgl_bayar', $request->tahun)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } else {
+                $kontrak = Kontrak::all();
+            }
+
+            // filter kos
+        } elseif (isset($request->filter_kos)) {
+            // simpan id kos
+            $filter_id = $request->filter_kos;
+
             $kontrak = Kontrak::with('penyewa', 'kamar')
-                ->whereYear('tgl_bayar', $request->tahun)
-                ->whereMonth('tgl_bayar', $request->bulan)
+                ->whereHas('kamar', function ($query) use ($filter_id) {
+                    $query->where('kos_id', $filter_id[0]);
+                    foreach ($filter_id as $key => $f) {
+                        if ($key !== 0) {
+                            $query->orWhere('kos_id', $f);
+                        }
+                    }
+                })
                 ->get();
-            return view('laporan/laporan', ['kontrak' => $kontrak]);
-        } elseif ($request->bulan) {
-            $kontrak = Kontrak::with('penyewa', 'kamar')
-                ->whereMonth('tgl_bayar', $request->bulan)
-                ->get();
-            return view('laporan/laporan', ['kontrak' => $kontrak]);
-        } elseif ($request->tahun) {
-            $kontrak = Kontrak::with('penyewa', 'kamar')
-                ->whereYear('tgl_bayar', $request->tahun)
-                ->get();
-            return view('laporan/laporan', ['kontrak' => $kontrak]);
+            // tidak pilih apa apa
         } else {
             $kontrak = Kontrak::all();
-            return view('laporan/laporan', ['kontrak' => $kontrak]);
         }
+
+        return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
     }
 
     public function laporan_pdf(Request $request)
     {
-
         // $kontrak = Kontrak::findOrFail($id);
         $title = 'Halaman Laporan';
         $kontrak = Kontrak::with('penyewa', 'kamar')
-            ->whereHas(
-                'kamar',
-                function ($query) {
-                    $query->where('kos_id', 1);
-                }
-            )->where('tgl_bayar', 'like', "%" . $request->bulan . "%")->get();
+            ->whereHas('kamar', function ($query) {
+                $query->where('kos_id', 1);
+            })
+            ->where('tgl_bayar', 'like', '%' . $request->bulan . '%')
+            ->get();
 
         $html = View::make('laporan/laporan', compact('kontrak', 'title'))->render();
         file_put_contents('debug.html', $html);
-
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
@@ -73,21 +119,23 @@ class LaporanController extends Controller
         $dompdf->stream('invoice.pdf', ['Attachment' => false]);
     }
 
-
     public function cari(Request $request)
     {
+        $title = 'Halaman Laporan';
         $cari = $request->cari;
+        $kos = Kos::all();
 
-        $kontrak = DB::table('kontraks')
-            ->select('kontraks.*', 'penyewa.nama as nama_penyewa', 'kamars.nama as nama_kamar')
-            ->join('penyewa', 'kontraks.penyewa_id', '=', 'penyewa.id')
-            ->join('kamars', 'kontraks.kamar_id', '=', 'kamars.id')
-            ->where('penyewa.nama', 'like', "%" . $cari . "%")
-            ->orWhere('kamars.nama', 'like', "%" . $cari . "%")
+        $kontrak = Kontrak::with('penyewa', 'kamar')
+            ->whereHas('penyewa', function ($query) use ($cari) {
+                $query->where('nama', 'like', '%' . $cari . '%');
+            })
+            ->orWhereHas('kamar', function ($query) use ($cari) {
+                $query->where('nama', 'like', '%' . $cari . '%');
+            })->get();
 
-            ->paginate(5);
 
-        return view('kontrak/listKontrak', ['kontrak' => $kontrak], ['cari' => $cari]);
+
+        return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
     }
 
     public function status(Request $request, $id)
@@ -102,33 +150,6 @@ class LaporanController extends Controller
 
         return view('transaksi/statusTransaksi', compact('transaksi', 'kode', 'tanggal'));
     }
-
-    public function konfirmasi(Request $request, $id)
-    {
-        $transaksi = Transaksi::findOrFail($id);
-
-        // kode transaksi
-        $inisialPenyewa = substr($transaksi->kontrak->penyewa->nama, 0, 2);
-        $inisialKamar = substr($transaksi->kontrak->kamar->nama, -2);
-        $kode = $inisialPenyewa . $inisialKamar . date('d');
-
-        // tanggal
-        $tanggal = date('d-m-y');
-
-        //kontrak id
-        $kontrak = $transaksi->kontrak->id;
-
-        $transaksi->kode = $kode;
-        $transaksi->tgl_transaksi = $tanggal;
-        $transaksi->metode = $request->metode;
-        $transaksi->status = $request->status;
-        $transaksi->kontrak_id = $kontrak;
-        $transaksi->save();
-
-        $redirectPage = $transaksi->status == 'sudah lunas' ? '/print/' . $transaksi->id : '/status/' . $transaksi->id;
-        return redirect($redirectPage);
-    }
-
     public function print($id)
     {
         $transaksi = Transaksi::findOrFail($id);

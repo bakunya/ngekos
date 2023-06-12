@@ -112,20 +112,18 @@ class PenyewaController extends Controller
     public function cari(Request $request)
     {
 
-        $request->validate([
-            'cari' => 'required',
-        ], [
-            'cari.required' => 'Kolom pencarian wajib diisi',
-        ]);
-
+        $title = 'Halaman List Penyewa';
         $cari = $request->cari;
 
-        $penyewa = DB::table('penyewa')
-            ->where('nama', 'like', "%" . $cari . "%")
-            ->orWhere('nik', 'like', "%" . $cari . "%")
-            ->orWhere('email', 'like', "%" . $cari . "%")
-            ->paginate(5);
-
-        return view('penyewa/listPenyewa', ['penyewa' => $penyewa], ['cari' => $cari]);
+        if (isset($cari)) {
+            $penyewa = Penyewa::where('nama', 'like', "%" . $cari . "%")
+                ->orWhere('nik', 'like', "%" . $cari . "%")
+                ->orWhere('alamat', 'like', "%" . $cari . "%")
+                ->orWhere('email', 'like', "%" . $cari . "%")
+                ->paginate(5);
+        } else {
+            return $this->index();
+        }
+        return view('penyewa/listPenyewa', compact('penyewa', 'cari', 'title'));
     }
 }

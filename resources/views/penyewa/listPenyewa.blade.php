@@ -29,11 +29,7 @@
                                         <i class="bi bi-search"></i>
                                     </button>
                                 </form>
-                                <form action="/penyewa" method="get">
-                                    <button class="btn btn-danger">
-                                        reset
-                                    </button>
-                                </form>
+                    
                             </div>
                         </div>
 

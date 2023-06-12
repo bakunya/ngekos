@@ -21,9 +21,6 @@
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
-                    <form action="/kos" method="get">
-                        <button class="btn btn-danger">reset</button>
-                    </form>
                 </div>
             </div>
             <!-- flash message insert -->

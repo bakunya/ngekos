@@ -116,19 +116,16 @@ class KamarController extends Controller
     public function cari(Request $request, Kos $kos)
     {
         $title = 'Halaman List Kamar';
-        $request->validate([
-            'cari' => 'required',
-        ], [
-            'cari.required' => 'Kolom pencarian wajib diisi',
-        ]);
-
         $cari = $request->cari;
 
-        $kamar = DB::table('kamars')
-            ->where('nama', 'like', "%" . $cari . "%")
-            ->where('kos_id', $kos->id)
-            ->orWhere('status', 'like', "%" . $cari . "%")
-            ->paginate(5);
+        if (isset($cari)) {
+            $kamar = Kamar::where('nama', 'like', "%" . $cari . "%")
+                ->where('kos_id', $kos->id)
+                ->orWhere('status', 'like', "%" . $cari . "%")
+                ->get();
+        }else {
+            return $this->index($kos->id);
+        }
 
         return view(view: 'kamar/listKamar', data: compact('kamar', 'kos', 'cari', 'title'))->with('pesan', 'Data tidak ditemukan');
     }

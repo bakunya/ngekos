@@ -57,7 +57,7 @@ Route::post('/add-kontrak/{id}', [KontrakController::class, 'store']);
 Route::get('/edit-kontrak/{id}', [KontrakController::class, 'edit']);
 Route::post('/update-kontrak/{id}', [KontrakController::class, 'update']);
 Route::get('/delete-kontrak/{id}', [KontrakController::class, 'destroy']);
-Route::get('/cari-kontrak/{id}', [KontrakController::class, 'cari']);
+Route::get('/cari-kontrak/{id}/cari', [KontrakController::class, 'cari']);
 Route::get('/pilih-kos', [KontrakController::class, 'lihat']);
 Route::get('/status/{id}', [KontrakController::class, 'status']);
 Route::post('/konfirmasi/{id}', [KontrakController::class, 'konfirmasi']);
@@ -70,15 +70,17 @@ Route::get('/download-pdf/{id}', [KontrakController::class, 'download_pdf']);
 
 // transaksi
 Route::get('/laporan', [LaporanController::class, 'index']);
-Route::post('/cari_bulan', [LaporanController::class, 'cari_bulan']);
+Route::post('/filter_bulan', [LaporanController::class, 'filter_bulan']);
 Route::get('/laporan_pdf', [LaporanController::class, 'laporan_pdf']);
+Route::get('/cari-transaksi', [LaporanController::class, 'cari']);
+
 
 Route::get('/add-transaksi', [TransaksiController::class, 'create']);
 Route::post('/add-transaksi', [TransaksiController::class, 'store']);
 Route::get('/edit-transaksi/{id}', [TransaksiController::class, 'edit']);
 Route::post('/update-transaksi/{id}', [TransaksiController::class, 'update']);
 Route::get('/delete-transaksi/{id}', [TransaksiController::class, 'destroy']);
-Route::get('/cari-transaksi', [TransaksiController::class, 'cari']);
+// Route::get('/cari-transaksi', [TransaksiController::class, 'cari']);
 // Route::get('/status/{id}', [TransaksiController::class, 'status']);
 // Route::post('/konfirmasi/{id}', [TransaksiController::class, 'konfirmasi']);
 // Route::get('/print/{id}', [TransaksiController::class, 'print']);
