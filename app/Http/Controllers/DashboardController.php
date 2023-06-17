@@ -15,16 +15,18 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $belumLunas = DB::table('transaksis')
+        $title = 'halaman dashboard';
+        $belumLunas = DB::table('kontraks')
             ->where('status', 'belum lunas')
             ->count();
-        $sudahLunas = DB::table('transaksis')
+        $sudahLunas = DB::table('kontraks')
             ->where('status', 'sudah lunas')
             ->count();
         $kos = Kos::with('pemilik')->first();
         $kamar = Kamar::with('kos')
             ->count();
+
         $penyewa = Penyewa::all()->count();
-        return view('dashboard/dashboard', compact('kamar', 'penyewa', 'kos', 'belumLunas', 'sudahLunas'));
+        return view('dashboard/dashboard', compact('kamar', 'penyewa', 'kos', 'belumLunas', 'sudahLunas', 'title'));
     }
 }

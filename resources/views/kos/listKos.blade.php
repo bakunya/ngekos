@@ -44,19 +44,19 @@
             </div>
             @endif
         </div>
-        <table class="table mt-3">
-            <thead class="table-primary table-striped">
+        <table class="table table-bordered table-stripped mt-3">
+            <thead class="table-primary">
                 <tr>
                     <td>no.</td>
                     <td>Nama</td>
                     <td>Alamat</td>
                     <td>Nomor HP</td>
-                    <td>Action</td>
+                    <td>Kamar / Action</td>
                 </tr>
             </thead>
             @foreach ($kos as $k)
             <tbody class="">
-                <tr class="table-striped">
+                <tr class="">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $k->nama}}</td>
                     <td>{{ $k->alamat}}</td>
