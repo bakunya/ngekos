@@ -5,6 +5,7 @@
                 href="/dashboard"
                 class="list-group-item list-group-item-action py-2 ripple 
                 {{ collect(explode('/', url()->current()))->pop() === 'dashboard' ? 'active' : 'bg-dark text-white' }}"
+
                 aria-current="true"
             >
                 <i class="fas fa-tachometer-alt fa-fw me-3"></i
@@ -28,7 +29,7 @@
             <a
                 href="/pilih-kos"
                 class="list-group-item list-group-item-action py-2 ripple 
-                {{ collect(explode('/', url()->current()))->pop() === 'pilih-kos' |     collect(explode('/', url()->current()))->pop() === 'kontrak/'. 1 ? 'active' : 'bg-dark text-white' }}"
+                {{ collect(explode('/', url()->current()))->pop() === 'pilih-kos' ? 'active' : 'bg-dark text-white' }}"
                 ><i class="fas fa-chart-line fa-fw me-3"></i
                 ><span>Kontrak</span></a
             >
@@ -36,6 +37,7 @@
                 href="/laporan"
                 class="list-group-item list-group-item-action py-2 ripple 
                 {{ collect(explode('/', url()->current()))->pop() === 'laporan' ? 'active' : 'bg-dark text-white' }}"
+
             >
                 <i class="fas fa-chart-pie fa-fw me-3"></i><span>Laporan</span>
             </a>

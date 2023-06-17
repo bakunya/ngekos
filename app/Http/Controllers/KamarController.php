@@ -24,7 +24,7 @@ class KamarController extends Controller
             Session::flash('search', 'gagal');
             Session::flash('pesan', 'Data tidak ditemukan');
         }
-
+        
         return view(view: 'kamar/listKamar', data: compact('kamar', 'kos', 'title'));
     }
 
@@ -123,7 +123,7 @@ class KamarController extends Controller
                 ->where('kos_id', $kos->id)
                 ->orWhere('status', 'like', "%" . $cari . "%")
                 ->get();
-        } else {
+        }else {
             return $this->index($kos->id);
         }
 

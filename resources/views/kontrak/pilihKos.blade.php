@@ -6,7 +6,7 @@
             <thead class="table-primary">
                 <tr>
                     <td>Nama kos</td>
-                    <td>Detail Kontrak</td>
+                    <td>Action</td>
                 </tr>
             </thead>
             @foreach ($kos as $k)

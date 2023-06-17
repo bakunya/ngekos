@@ -70,7 +70,7 @@ Route::get('/download-pdf/{id}', [KontrakController::class, 'download_pdf']);
 
 // transaksi
 Route::get('/laporan', [LaporanController::class, 'index']);
-Route::post('/filter', [LaporanController::class, 'filter']);
+Route::post('/filter_bulan', [LaporanController::class, 'filter_bulan']);
 Route::get('/laporan_pdf', [LaporanController::class, 'laporan_pdf']);
 Route::get('/cari-transaksi', [LaporanController::class, 'cari']);
 

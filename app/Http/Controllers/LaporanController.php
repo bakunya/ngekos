@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\View;
 
 class LaporanController extends Controller
 {
-    private $filteredKontrak;
     public function index()
     {
         $title = 'Halaman Laporan';
@@ -26,21 +25,92 @@ class LaporanController extends Controller
         return view('laporan/laporan', compact('kontrak', 'title', 'kos'));
     }
 
-    function laporan(Request $request)
+    public function filter_bulan(Request $request)
     {
         $title = 'Halaman Laporan';
         $kos = Kos::all();
-        $kontrak = session('filteredKontrak');
 
-        return view('laporan/laporan_cetak', compact('kos', 'title', 'kontrak'));
+        // filter kos, bulan, tahun
+        if (isset($request->filter_kos) && ($request->bulan || $request->tahun)) {
+            if ($request->bulan && $request->tahun) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereYear('tgl_bayar', $request->tahun)
+                    ->whereMonth('tgl_bayar', $request->bulan)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } elseif ($request->bulan) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereMonth('tgl_bayar', $request->bulan)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } elseif ($request->tahun) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereYear('tgl_bayar', $request->tahun)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } else {
+                $kos = Kos::all();
+                $kontrak = Kontrak::all();
+            }
+
+            // filter bulan, tahun
+        } elseif ($request->tahun || $request->bulan) {
+            if ($request->bulan && $request->tahun) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereYear('tgl_bayar', $request->tahun)
+                    ->whereMonth('tgl_bayar', $request->bulan)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } elseif ($request->bulan) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereMonth('tgl_bayar', $request->bulan)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } elseif ($request->tahun) {
+                $kontrak = Kontrak::with('penyewa', 'kamar')
+                    ->whereYear('tgl_bayar', $request->tahun)
+                    ->get();
+                return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
+            } else {
+                $kontrak = Kontrak::all();
+            }
+
+            // filter kos
+        } elseif (isset($request->filter_kos)) {
+            // simpan id kos
+            $filter_id = $request->filter_kos;
+
+            $kontrak = Kontrak::with('penyewa', 'kamar')
+                ->whereHas('kamar', function ($query) use ($filter_id) {
+                    $query->where('kos_id', $filter_id[0]);
+                    foreach ($filter_id as $key => $f) {
+                        if ($key !== 0) {
+                            $query->orWhere('kos_id', $f);
+                        }
+                    }
+                })
+                ->get();
+            // tidak pilih apa apa
+        } else {
+            $kontrak = Kontrak::all();
+        }
+
+        return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
     }
+
     public function laporan_pdf(Request $request)
     {
+        // $kontrak = Kontrak::findOrFail($id);
         $title = 'Halaman Laporan';
-        $kos = Kos::all();
-        $kontrak = session('filteredKontrak');
+        $kontrak = Kontrak::with('penyewa', 'kamar')
+            ->whereHas('kamar', function ($query) {
+                $query->where('kos_id', 1);
+            })
+            ->where('tgl_bayar', 'like', '%' . $request->bulan . '%')
+            ->get();
 
-        $html = View('laporan/laporan_cetak', compact('kontrak', 'title', 'kos'))->render();
+        $html = View::make('laporan/laporan', compact('kontrak', 'title'))->render();
+        file_put_contents('debug.html', $html);
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
@@ -53,53 +123,20 @@ class LaporanController extends Controller
     {
         $title = 'Halaman Laporan';
         $cari = $request->cari;
-        $bulan = $request->bulan;
-        $tahun = $request->tahun;
-        $filter_kos = $request->filter_kos;
         $kos = Kos::all();
 
-        $kontrak = Kontrak::with('penyewa', 'kamar');
+        $kontrak = Kontrak::with('penyewa', 'kamar')
+            ->whereHas('penyewa', function ($query) use ($cari) {
+                $query->where('nama', 'like', '%' . $cari . '%');
+            })
+            ->orWhereHas('kamar', function ($query) use ($cari) {
+                $query->where('nama', 'like', '%' . $cari . '%');
+            })->get();
 
-        if ($bulan) {
-            $kontrak->whereMonth('tgl_bayar', $bulan);
-        }
-        if ($tahun) {
-            $kontrak->whereYear('tgl_bayar', $tahun);
-        }
-        if ($filter_kos) {
-            $kontrak->whereHas('kamar', function ($query) use ($filter_kos) {
-                $query->whereIn('kos_id', $filter_kos);
-            });
-        }
 
-        if ($cari) {
-            // Cek apakah sudah dilakukan filter
-            $isFiltered = ($bulan || $tahun || $filter_kos);
 
-            $kontrak->where(function ($query) use ($cari, $isFiltered) {
-                $query->where(function ($query) use ($cari) {
-                    $query->whereHas('penyewa', function ($query) use ($cari) {
-                        $query->where('nama', 'like', '%' . $cari . '%');
-                    })
-                        ->orWhereHas('kamar', function ($query) use ($cari) {
-                            $query->where('nama', 'like', '%' . $cari . '%');
-                        });
-                });
-
-                // Jika sudah dilakukan filter, tambahkan kondisi tambahan
-                if ($isFiltered) {
-                    $query->orWhere(function ($query) use ($cari) {
-                        $query->where('tgl_bayar', 'like', '%' . $cari . '%');
-                    });
-                }
-            });
-        }
-
-        $kontrak = $kontrak->get();
-        session(['filteredKontrak' => $kontrak]);
         return view('laporan/laporan', compact('kontrak', 'kos', 'title'));
     }
-
 
     public function status(Request $request, $id)
     {
@@ -112,5 +149,10 @@ class LaporanController extends Controller
         $tanggal = date('d-m-y');
 
         return view('transaksi/statusTransaksi', compact('transaksi', 'kode', 'tanggal'));
+    }
+    public function print($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        return view('transaksi/print', compact('transaksi'));
     }
 }
