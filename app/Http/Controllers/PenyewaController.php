@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Penyewa;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Database\Eloquent\Link;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\View;
+
 
 
 class PenyewaController extends Controller
 {
+
     public function index()
     {
         $title = 'Halaman List Penyewa';
-        $penyewa = Penyewa::paginate(5);
-        return view('penyewa/listPenyewa', ['penyewa' => $penyewa], ['title' => $title]);
+        $penyewa = Penyewa::paginate(6);
+        return view('penyewa/listPenyewa', compact('penyewa', 'title'));
     }
 
     public function create()

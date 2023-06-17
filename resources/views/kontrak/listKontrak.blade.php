@@ -1,7 +1,7 @@
 @extends('layout.main') @section('container')
-<div class="container-fluid">
+<div class="container-fluid mt-4">
     <div class="row">
-        <div class="mt-2">
+        <div class="p-0">
             <h2>Data Kontrak</h2>
 
             <!-- menu atas  -->
@@ -26,9 +26,6 @@
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
-                    <form action="/kontrak" method="get">
-                        <button class="btn btn-danger">reset</button>
-                    </form>
                 </div>
             </div>
             <!-- flash message insert -->
@@ -52,10 +49,10 @@
             </div>
             @endif
         </div>
-        <table class="table mt-3">
+        <table class="table mt-3 table-bordered">
             <thead class="table-primary table-striped">
                 <tr>
-                    <td>no.</td>
+                    <td class="table-nomor">no.</td>
                     <td>penyewa</td>
                     <td>kamar</td>
                     <td>tgl mulai</td>
@@ -74,7 +71,7 @@
                     <td>{{ $k->tgl_mulai}}</td>
                     <td>{{ $k->tgl_selesai}}</td>
 
-                    <td>
+                    <td class="table-action">
                         <a
                             href="/edit-kontrak/{{$k->id}}"
                             class="btn btn-success"
@@ -89,7 +86,7 @@
                             <i class="bi bi-trash-fill"></i
                         ></a>
                     </td>
-                    <td>
+                    <td class="table-action">
                         <a
                             href="/status/{{$k->id}}"
                             class="btn {{ $k->status == 'sudah lunas' ? 'btn-success' : 'btn-primary'  }} btn-primary"
@@ -109,6 +106,7 @@
             </tbody>
             @endforeach
         </table>
+        {{ $kontrak->links()  }}
     </div>
 </div>
 @endsection

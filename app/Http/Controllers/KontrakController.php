@@ -5,25 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Kamar;
 use App\Models\Kontrak;
 use App\Models\Kos;
-use App\Models\Pemilik;
 use App\Models\Penyewa;
-use App\Models\Transaksi;
 use Dompdf\Dompdf;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
-use Spatie\Browsershot\Browsershot;
-use Twilio\Rest\Client;
 
 class KontrakController extends Controller
 {
     public function lihat()
     {
         $title = 'Halaman Kontrak';
-        $kos = Kos::all();
+        $kos = Kos::paginate(6);
         $kontrak = Kontrak::with('penyewa', 'kamar')->get();
         return view(view: 'kontrak/pilihKos', data: compact('kontrak', 'kos', 'title'));
     }
@@ -35,7 +29,7 @@ class KontrakController extends Controller
             ->whereHas('kamar', function ($query) use ($kos_id) {
                 $query->where('kos_id', $kos_id);
             })
-            ->paginate(5);
+            ->paginate(6);
         return view('kontrak/listKontrak', compact('kontrak', 'id', 'title'));
     }
 

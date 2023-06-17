@@ -1,7 +1,7 @@
 @extends('layout.main') @section('container')
 <div class="container-fluid">
     <div class="row">
-        <div class="mt-4">
+        <div class="mt-4 p-0">
             <h2>Data Kamar {{$kos->nama}}</h2>
             <!-- menu atas  -->
             <div class="d-flex justify-content-between">
@@ -26,9 +26,6 @@
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
-                    <form action="/kamar" method="get">
-                        <button class="btn btn-danger">reset</button>
-                    </form>
                 </div>
             </div>
             <!-- flash message insert -->
@@ -52,10 +49,10 @@
             </div>
             @endif
         </div>
-        <table class="table mt-3">
-            <thead class="table-primary table-striped">
+        <table class="table mt-3 table-bordered">
+            <thead class="table-primary">
                 <tr>
-                    <td>no.</td>
+                    <td class="table-nomor">no.</td>
                     <td>Nama</td>
                     <td>Fasilitas</td>
                     <td>Harga</td>
@@ -71,7 +68,7 @@
                     <td>{{ $k->fasilitas}}</td>
                     <td>{{ $k->harga}}</td>
                     <td>{{ $k->status}}</td>
-                    <td>
+                    <td style="width: 100px; white-space: nowrap">
                         <!-- <a href="#" class="btn btn-warning">Detail</a> -->
                         <a
                             href="/edit-kamar/{{$k->id}}"
@@ -91,6 +88,9 @@
             </tbody>
             @endforeach
         </table>
+        <div>
+            {{ $kamar->links() }}
+        </div>
     </div>
 </div>
 @endsection

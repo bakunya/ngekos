@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kamar;
 use App\Models\Kos;
-use App\Models\Pemilik;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 
@@ -17,14 +15,13 @@ class KamarController extends Controller
         $title = 'Halaman List Kamar';
         $kos = Kos::findOrFail($id);
         $kamar = Kamar::with('kos')
-            ->where('kos_id', $id)
-            ->get();
+            ->where('kos_id', $id)->paginate(6);
 
         if (!$kamar) {
             Session::flash('search', 'gagal');
             Session::flash('pesan', 'Data tidak ditemukan');
         }
-        
+
         return view(view: 'kamar/listKamar', data: compact('kamar', 'kos', 'title'));
     }
 
@@ -35,7 +32,6 @@ class KamarController extends Controller
     }
     public function store(Request $request, $id)
     {
-
 
         $request->validate([
             'nama' => 'required|max:30',
@@ -69,7 +65,7 @@ class KamarController extends Controller
     public function edit($id)
     {
         $kamar = Kamar::with('kos')->findOrFail($id);
-        $kos = Kos::all();
+        $kos = Kos::painate(6);
         return view('kamar/editKamar', ['kamar' => $kamar], ['kos' => $kos]);
     }
 
@@ -123,7 +119,7 @@ class KamarController extends Controller
                 ->where('kos_id', $kos->id)
                 ->orWhere('status', 'like', "%" . $cari . "%")
                 ->get();
-        }else {
+        } else {
             return $this->index($kos->id);
         }
 

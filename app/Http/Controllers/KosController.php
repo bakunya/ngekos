@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kos;
 use App\Models\Pemilik;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\View;
 
 
 class KosController extends Controller
@@ -16,7 +13,7 @@ class KosController extends Controller
     public function index()
     {
         $title = 'Halaman List Kos';
-        $kos = Kos::all();
+        $kos = Kos::paginate(6);
         return view(view: 'kos/listKos', data: compact('kos', 'title'));
     }
 

@@ -1,12 +1,12 @@
 @extends('layout.main') @section('container')
 <div class="container-fluid">
     <div class="row">
-        <div class="mt-4">
+        <div class="mt-4 p-0">
             <h2>Data Kos</h2>
 
             <!-- menu atas  -->
             <div class="d-flex justify-content-between">
-                <div class="">
+                <div class="p-0">
                     <a href="/add-kos" class="btn btn-primary">Tambah</a>
                 </div>
                 <div class="d-flex">
@@ -44,14 +44,14 @@
             </div>
             @endif
         </div>
-        <table class="table mt-3">
-            <thead class="table-primary table-striped">
-                <tr>
-                    <td>no.</td>
+        <table class="table mt-1 table-bordered">
+            <thead class="table-primary">
+                <tr class="">
+                    <td class="table-nomor">no.</td>
                     <td>Nama</td>
                     <td>Alamat</td>
                     <td>Nomor HP</td>
-                    <td>Action</td>
+                    <td>Kamar / Action</td>
                 </tr>
             </thead>
             @foreach ($kos as $k)
@@ -61,7 +61,7 @@
                     <td>{{ $k->nama}}</td>
                     <td>{{ $k->alamat}}</td>
                     <td>{{ $k->no_telp}}</td>
-                    <td>
+                    <td style="width: 100px; white-space: nowrap">
                         <a href="/kamar/{{ $k->id }}" class="btn btn-warning">
                             <i class="bi bi-info-circle-fill"></i
                         ></a>
@@ -80,6 +80,9 @@
             </tbody>
             @endforeach
         </table>
+        <div>
+            {{ $kos->links() }}
+        </div>
     </div>
+    @endsection
 </div>
-@endsection

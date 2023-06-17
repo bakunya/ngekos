@@ -66,23 +66,11 @@ Route::get('/tagih/{id}', [KontrakController::class, 'tagih']);
 Route::post('/tagih/{id}', [KontrakController::class, 'wa']);
 Route::get('/download-pdf/{id}', [KontrakController::class, 'download_pdf']);
 
-
-
-// transaksi
+// laporan
 Route::get('/laporan', [LaporanController::class, 'index']);
 Route::post('/filter_bulan', [LaporanController::class, 'filter_bulan']);
 Route::get('/laporan_pdf', [LaporanController::class, 'laporan_pdf']);
 Route::get('/cari-transaksi', [LaporanController::class, 'cari']);
 
-
-Route::get('/add-transaksi', [TransaksiController::class, 'create']);
-Route::post('/add-transaksi', [TransaksiController::class, 'store']);
-Route::get('/edit-transaksi/{id}', [TransaksiController::class, 'edit']);
-Route::post('/update-transaksi/{id}', [TransaksiController::class, 'update']);
-Route::get('/delete-transaksi/{id}', [TransaksiController::class, 'destroy']);
-// Route::get('/cari-transaksi', [TransaksiController::class, 'cari']);
-// Route::get('/status/{id}', [TransaksiController::class, 'status']);
-// Route::post('/konfirmasi/{id}', [TransaksiController::class, 'konfirmasi']);
-// Route::get('/print/{id}', [TransaksiController::class, 'print']);
-
+// dashboard    
 Route::get('/dashboard', [DashboardController::class, 'index']);
