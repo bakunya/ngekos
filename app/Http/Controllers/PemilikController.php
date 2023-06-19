@@ -16,7 +16,7 @@ class PemilikController extends Controller
     public function index()
     {
         $pemilik = Pemilik::all();
-        return view('pemilik/listPemilik', ['pemilik' => $pemilik]);
+        return view('pemilik/listPemilik', compact('pemilik'));
     }
 
     public function create()
@@ -108,6 +108,7 @@ class PemilikController extends Controller
             ->orWhere('alamat', 'like', "%" . $cari . "%")
             ->paginate(5);
 
-        return view('pemilik/listpemilik', ['pemilik' => $pemilik], ['cari' => $cari]);
+
+        return view('pemilik/listpemilik', compact('pemilik', 'cari'));
     }
 }

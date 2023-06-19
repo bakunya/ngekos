@@ -21,7 +21,7 @@ Route::post('/add-penyewa', [PenyewaController::class, 'store']);
 Route::get('/edit-penyewa/{id}', [PenyewaController::class, 'edit']);
 Route::post('/update-penyewa/{id}', [PenyewaController::class, 'update']);
 Route::get('/delete-penyewa/{id}', [PenyewaController::class, 'destroy']);
-Route::get('/cari', [PenyewaController::class, 'cari']);
+Route::get('/cari-penyewa', [PenyewaController::class, 'cari']);
 
 // pemilik
 Route::get('/pemilik', [PemilikController::class, 'index']);

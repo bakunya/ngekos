@@ -14,6 +14,7 @@ class PenyewaController extends Controller
     public function index()
     {
         $title = 'Halaman List Penyewa';
+        $cari_penyewa = session('cari_penyewa');
         $penyewa = Penyewa::paginate(6);
         return view('penyewa/listPenyewa', compact('penyewa', 'title'));
     }
@@ -120,8 +121,10 @@ class PenyewaController extends Controller
                 ->orWhere('email', 'like', "%" . $cari . "%")
                 ->paginate(5);
         } else {
-            return $this->index();
+            $penyewa = Penyewa::paginate(6);
         }
+
+        session(['cari_penyewa' => $request->cari]);
         return view('penyewa/listPenyewa', compact('penyewa', 'cari', 'title'));
     }
 }

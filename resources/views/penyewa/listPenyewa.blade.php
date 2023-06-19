@@ -11,7 +11,11 @@
                     <a href="/add-penyewa" class="btn btn-primary">Tambah</a>
                 </div>
                 <div class="d-flex">
-                    <form action="/cari" method="get" class="d-flex me-1">
+                    <form
+                        action="/cari-penyewa"
+                        method="get"
+                        class="d-flex me-1"
+                    >
                         <input
                             type="text"
                             name="cari"

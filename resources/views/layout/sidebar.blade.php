@@ -13,7 +13,12 @@
             <a
                 href="/penyewa"
                 class="list-group-item list-group-item-action py-2 ripple  
-                {{ collect(explode('/', url()->current()))->pop() === 'penyewa' ? 'active' : 'bg-dark text-white' }}"
+    {{
+        collect(explode('/', url()->current()))->pop() === 'penyewa' ||
+        (collect(explode('/', url()->current()))->contains('penyewa') &&
+        collect(explode('/', url()->current()))->contains('cari-penyewa')) &&
+        session('cari_penyewa') ? 'active' : 'bg-dark text-white'
+    }}"
             >
                 <i class="fas fa-chart-area fa-fw me-3"></i
                 ><span>Penyeawa</span>
@@ -22,13 +27,13 @@
                 href="/kos"
                 class="
                     list-group-item list-group-item-action py-2 ripple 
-                    {{ collect(explode('/', url()->current()))->pop() === 'kos' ? 'active' : 'bg-dark text-white' }}"
-                ><i class="fas fa-lock fa-fw me-3"></i><span>Kos</span></a
+                    {{ collect(explode('/', url()->current()))->pop() === 'kos' || (collect(explode('/', url()->current()))->contains('kamar') && collect(explode('/', url()->current()))->last() === $id) ? 'active' : 'bg-dark text-white' }}"
+                ><i class="fas fa-lock fa-fw me-3"></i><span>kos</span></a
             >
             <a
                 href="/pilih-kos"
                 class="list-group-item list-group-item-action py-2 ripple 
-                {{ collect(explode('/', url()->current()))->pop() === 'pilih-kos' |     collect(explode('/', url()->current()))->pop() === 'kontrak/'. 1 ? 'active' : 'bg-dark text-white' }}"
+                {{ collect(explode('/', url()->current()))->pop() === 'pilih-kos' || (collect(explode('/', url()->current()))->contains('kontrak') && collect(explode('/', url()->current()))->last() === $id) ? 'active' : 'bg-dark text-white' }}"
                 ><i class="fas fa-chart-line fa-fw me-3"></i
                 ><span>Kontrak</span></a
             >

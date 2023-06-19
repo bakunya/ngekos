@@ -22,7 +22,8 @@ class KamarController extends Controller
             Session::flash('pesan', 'Data tidak ditemukan');
         }
 
-        return view(view: 'kamar/listKamar', data: compact('kamar', 'kos', 'title'));
+        return view('kamar/listKamar', compact('kamar', 'kos', 'title'))
+            ->with('id', $id);
     }
 
     public function create($id)

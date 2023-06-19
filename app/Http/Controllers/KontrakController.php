@@ -21,13 +21,12 @@ class KontrakController extends Controller
         $kontrak = Kontrak::with('penyewa', 'kamar')->get();
         return view(view: 'kontrak/pilihKos', data: compact('kontrak', 'kos', 'title'));
     }
-    public function index($kos_id)
+    public function index($id)
     {
         $title = 'Halaman Kontrak';
-        $id = $kos_id;
         $kontrak = Kontrak::with('penyewa', 'kamar')
-            ->whereHas('kamar', function ($query) use ($kos_id) {
-                $query->where('kos_id', $kos_id);
+            ->whereHas('kamar', function ($query) use ($id) {
+                $query->where('kos_id', $id);
             })
             ->paginate(6);
         return view('kontrak/listKontrak', compact('kontrak', 'id', 'title'));
