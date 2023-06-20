@@ -7,7 +7,7 @@ use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\KontrakController;
-use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -74,3 +74,6 @@ Route::get('/cari-transaksi', [LaporanController::class, 'cari']);
 
 // dashboard    
 Route::get('/dashboard', [DashboardController::class, 'index']);
+
+// auth
+Route::get('/register', [RegisterController::class, 'index']);
