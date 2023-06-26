@@ -20,10 +20,6 @@ return new class extends Migration
             $table->date('tgl_bayar')->nullable();
             $table->string('status', 25)->nullable();
             $table->string('metode', 25)->nullable();
-            $table->unsignedBigInteger('kamar_id');
-            $table->foreign('kamar_id')->references('id')->on('kamars')->onDelete('restrict')->onUpdate('cascade');
-            $table->unsignedBigInteger('penyewa_id');
-            $table->foreign('penyewa_id')->references('id')->on('penyewa')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
@@ -32,12 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('kontraks', function (Blueprint $table) {
-            $table->dropForeign(['kamar_id']);
-            $table->dropForeign(['penyewa_id']);
-            $table->dropColumn(['kamar_id', 'penyewa_id']);
-        });
-
         Schema::dropIfExists('kontraks');
     }
 };

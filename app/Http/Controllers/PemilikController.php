@@ -30,6 +30,7 @@ class PemilikController extends Controller
             'nama' => 'required|max:30',
             'email' => 'required|max:50|email:dns|unique:pemiliks',
             'alamat' => 'required|max:50',
+            'password' => 'required',
         ], [
             'nama.required' => 'Nama Wajib Diisi',
             'email.required' => 'Email Wajib Diisi',
@@ -39,12 +40,14 @@ class PemilikController extends Controller
             'nama.max' => 'Nama Maksimal 30 Karakter',
             'email.max' => 'Email Maksimal 50 Karakter',
             'alamat.max' => 'Alamat Maksimal 50 Karakter',
+            'password.required' => 'Password Wajib Diisi',
         ]);
 
         $pemilik = new pemilik;
         $pemilik->nama = $request->nama;
         $pemilik->email = $request->email;
         $pemilik->alamat = $request->alamat;
+        $pemilik->password = $request->password;
         $pemilik->save();
 
         if ($pemilik) {
@@ -69,6 +72,7 @@ class PemilikController extends Controller
         $pemilik->nama = $request->nama;
         $pemilik->email = $request->email;
         $pemilik->alamat = $request->alamat;
+        $pemilik->paspsword = $request->password;
 
         $pemilik->save();
 

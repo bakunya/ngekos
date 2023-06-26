@@ -17,8 +17,6 @@ return new class extends Migration
             $table->text('fasilitas');
             $table->string('harga');
             $table->string('status');
-            $table->unsignedBigInteger('kos_id');
-            $table->foreign('kos_id')->references('id')->on('koss')->onDelete('restrict')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -28,9 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('kamars', function (Blueprint $table) {
-            $table->dropForeign(['kos_id']);
-            $table->dropColumn(['kos_id']);
-        });
+        Schema::dropIfExists('kamars');
     }
 };

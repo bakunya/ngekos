@@ -77,3 +77,4 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 
 // auth
 Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'store']);

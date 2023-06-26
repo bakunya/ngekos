@@ -65,6 +65,22 @@
                     </div>
                     @enderror
                 </div>
+                <div>
+                    <label for="password">password</label>
+                    <input
+                        class="form-control @error('password') is-invalid @enderror"
+                        type="password"
+                        name="password"
+                        id="password"
+                        value="{{ old('password') }}"
+                    />
+                    <!-- notif error -->
+                    @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
                 <button class="btn btn-primary btn-lg mt-3">save</button>
             </form>
         </div>
