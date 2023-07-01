@@ -49,7 +49,7 @@
             </div>
             @endif
         </div>
-        <table class="table mt-3 table-bordered">
+        <table id="myTable" class="table mt-3 table-bordered">
             <thead class="table-primary">
                 <tr>
                     <td class="table-nomor">no.</td>

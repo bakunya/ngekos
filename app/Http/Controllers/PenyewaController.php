@@ -36,12 +36,10 @@ class PenyewaController extends Controller
             'nik.required' => 'Nik Wajib Diisi',
             'nama.required' => 'Nama Wajib Diisi',
             'email.required' => 'Email Wajib Diisi',
-            'email.email' => 'Email Tidak Valid',
             'email.unique' => 'Email Sudah Terdaftar',
             'alamat.required' => 'Alamat Wajib Diisi',
             'no_telp.required' => 'NO Telepon Wajib Diisi',
             'nama.max' => 'Nama Maksimal 30 Karakter',
-            'email.max' => 'Email Maksimal 50 Karakter',
             'alamat.max' => 'Alamat Maksimal 50 Karakter',
         ]);
 

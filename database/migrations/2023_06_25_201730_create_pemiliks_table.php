@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pemiliks', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('nama');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('alamat');
             $table->string('password');
             $table->timestamps();

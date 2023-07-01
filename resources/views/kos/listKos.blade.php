@@ -44,7 +44,7 @@
             </div>
             @endif
         </div>
-        <table class="table mt-1 table-bordered">
+        <table id="myTable" class="table mt-1 table-bordered">
             <thead class="table-primary">
                 <tr class="">
                     <td class="table-nomor">no.</td>

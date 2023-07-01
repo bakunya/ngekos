@@ -51,7 +51,7 @@
             @endif
         </div>
 
-        <table class="table table-bordered">
+        <table id="myTable" class="table">
             <thead class="table-primary table-striped">
                 <tr>
                     <td class="table-nomor">no.</td>

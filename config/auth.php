@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'pemiliks',
     ],
 
     /*
@@ -38,7 +38,11 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'pemiliks',
+        ],
+        'pemilik' => [
+            'driver' => 'session',
+            'provider' => 'pemiliks',
         ],
     ],
 
@@ -58,19 +62,17 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
     'providers' => [
+        'pemiliks' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Pemilik::class,
+        ],
+
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords

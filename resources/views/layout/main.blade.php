@@ -23,6 +23,13 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
         />
+
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"
+        />
+
         <style>
             p {
                 margin: 0;
@@ -101,6 +108,20 @@
             }
 
             /* tabel */
+
+            #myTable {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #myTable tbody tr td {
+                border: 1px solid #d8e3f4;
+            }
+
+            #myTable thead td {
+                border: 1px solid #d8e3f4;
+            }
+
             .table-nomor {
                 width: 5%;
                 white-space: nowrap;
@@ -108,6 +129,9 @@
             .table-action {
                 width: 100px;
                 white-space: nowrap;
+            }
+            #myTable_wrapper {
+                padding: 0;
             }
         </style>
     </head>
@@ -123,6 +147,19 @@
                 }
             }
         </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $("#myTable").DataTable({
+                    searching: false,
+                    paging: false,
+                    info: false,
+                });
+            });
+        </script>
+
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
@@ -133,7 +170,5 @@
             type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"
         ></script>
-
-        <!-- filter icon -->
     </body>
 </html>

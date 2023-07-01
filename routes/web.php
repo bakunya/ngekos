@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PemilikController;
@@ -7,7 +8,6 @@ use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\KontrakController;
-use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -76,5 +76,7 @@ Route::get('/cari-transaksi', [LaporanController::class, 'cari']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
 // auth
-Route::get('/register', [RegisterController::class, 'index']);
-Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/register', [AuthController::class, 'index']);
+Route::post('/register', [AuthController::class, 'store']);
+Route::get('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'authenticate']);

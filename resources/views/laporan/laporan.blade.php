@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <table class="table mt-3 table-bordered">
+    <table id="myTable" class="table mt-3">
         <thead class="table-primary table-striped">
             <tr>
                 <td class="table-nomor">no.</td>
@@ -116,7 +116,7 @@
         </tbody>
     </table>
     <div>
-        <a href="/laporan_pdf" class="btn btn-primary">
+        <a href="/laporan_pdf" class="btn btn-primary mt-3">
             <i class="bi bi-printer-fill"></i>
         </a>
     </div>
