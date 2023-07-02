@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kamar;
 use App\Models\Kos;
+use App\Models\Kamar;
 use App\Models\Penyewa;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\AuthController;
+
+
 
 
 class DashboardController extends Controller
 {
-
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $req)
     {
         $title = 'halaman dashboard';
@@ -26,7 +32,8 @@ class DashboardController extends Controller
         $kamar = Kamar::with('kos')
             ->count();
         $penyewa = Penyewa::all()->count();
-        $pemilik = $req->session()->get('data_user');
+        $pemilik = Session::get('data_user');
+
         return view('dashboard/dashboard', compact('kamar', 'penyewa', 'kos', 'belumLunas', 'sudahLunas', 'title', 'pemilik'));
     }
 }

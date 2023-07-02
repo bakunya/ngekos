@@ -17,7 +17,8 @@ class KontrakController extends Controller
     public function lihat()
     {
         $title = 'Halaman Kontrak';
-        $kos = Kos::paginate(6);
+        $pemilik = Session::get('data_user'); // sesion user login
+        $kos = Kos::where('pemilik_id', $pemilik->id)->paginate(6);
         $kontrak = Kontrak::with('penyewa', 'kamar')->get();
         return view(view: 'kontrak/pilihKos', data: compact('kontrak', 'kos', 'title'));
     }
@@ -80,22 +81,6 @@ class KontrakController extends Controller
         $kamar = kamar::find($request->kamar_id);
         $kamar->status = 'disewa';
         $kamar->save();
-
-        // // add transaksi
-        // $transaksi = new Transaksi;
-
-        // $inisialPenyewa = substr($kontrak->penyewa->nama, 0, 2);
-        // $inisialKamar = substr($kontrak->kamar->nama, -2);
-        // $kode = $inisialPenyewa . $inisialKamar . date('d');
-
-        // $tanggal = date('Y-m-d');
-
-        // $transaksi->kode = $kode;
-        // $transaksi->tgl_transaksi = $tanggal;
-        // $transaksi->metode = NULL;
-        // $transaksi->status = 'belum lunas';
-        // $transaksi->kontrak_id = $kontrak->id;
-        // $transaksi->save();
 
         DB::commit();
 

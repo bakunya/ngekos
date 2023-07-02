@@ -41,10 +41,9 @@
             </a>
         </div>
         <div>
-            <h3 class="mt-4 fw-bold">Info Kos</h3>
+            <h3 class="mt-4 fw-bold">Info Pemilik</h3>
             <table class="table">
                 <tbody>
-                    {{ $pemilik }}
                     @if(isset($pemilik))
                     <tr>
                         <td>Nama Kos</td>

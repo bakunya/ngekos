@@ -1,84 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-            crossorigin="anonymous"
-        />
-        <title>Kos | tambah data</title>
-    </head>
-    <body>
-        <div class="container mt-4">
-            <h2>Add Kos</h2>
-            <form action="add-kos" method="post">
-                @csrf
-                <div>
-                    <label for="nama">nama</label>
-                    <input
-                        class="form-control @error('nama') is-invalid @enderror"
-                        type="text"
-                        name="nama"
-                        id="nama"
-                        value="{{ old('nama') }}"
-                    />
-                    <!-- notif error -->
-                    @error('nama')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <title>Kos | tambah data</title>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2>Add Kos</h2>
+        <form action="add-kos" method="post">
+            @csrf
+            <div>
+                <label for="nama">nama</label>
+                <input class="form-control @error('nama') is-invalid @enderror" type="text" name="nama" id="nama"
+                    value="{{ old('nama') }}" />
+                <!-- notif error -->
+                @error('nama')
+                <div class="invalid-feedback">
+                    {{ $message }}
                 </div>
-                <div>
-                    <label for="alamat">alamat</label>
-                    <input
-                        class="form-control @error('alamat') is-invalid @enderror"
-                        type="text"
-                        name="alamat"
-                        id="alamat"
-                        value="{{ old('alamat') }}"
-                    />
-                    <!-- notif error -->
-                    @error('alamat')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
+                @enderror
+            </div>
+            <div>
+                <label for="alamat">alamat</label>
+                <input class="form-control @error('alamat') is-invalid @enderror" type="text" name="alamat" id="alamat"
+                    value="{{ old('alamat') }}" />
+                <!-- notif error -->
+                @error('alamat')
+                <div class="invalid-feedback">
+                    {{ $message }}
                 </div>
-                <div>
-                    <label for="no_telp">nomor HP </label>
-                    <input
-                        class="form-control @error('no_telp') is-invalid @enderror"
-                        type="text"
-                        name="no_telp"
-                        id="no_telp"
-                        value="{{ old('no_telp') }}"
-                    />
-                    <!-- notif error -->
-                    @error('no_telp')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
+                @enderror
+            </div>
+            <div>
+                <label for="no_telp">nomor HP </label>
+                <input class="form-control @error('no_telp') is-invalid @enderror" type="text" name="no_telp"
+                    id="no_telp" value="{{ old('no_telp') }}" />
+                <!-- notif error -->
+                @error('no_telp')
+                <div class="invalid-feedback">
+                    {{ $message }}
                 </div>
-                <div>
-                    <label for="pemilik_id">pemilik_id</label>
-                    <select
-                        name="pemilik_id"
-                        id="pemilik_id"
-                        class="form-control"
-                    >
-                        @foreach ($pemilik as $pml)
-                        <option value="{{$pml->id}}">{{$pml->nama}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <button class="btn btn-primary btn-lg mt-3">save</button>
-            </form>
-        </div>
-    </body>
+                @enderror
+            </div>
+            <div hidden="yes">
+                <input type="text" name="pemilik_id" id="pemilik_id" value="{{ $pemilik->id }}" />
+            </div>
+            <button class="btn btn-primary btn-lg mt-3">save</button>
+        </form>
+    </div>
+</body>
+
 </html>

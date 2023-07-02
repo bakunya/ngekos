@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-
 class AuthController extends Controller
 {
     public function __construct()
@@ -45,7 +44,6 @@ class AuthController extends Controller
             // get user by email
             // set data user on session
             $request->session()->put('data_user', Auth::user());
-
             return redirect()->intended('/dashboard');
         } else {
             return back()->with('status', 'Email atau Password salah');

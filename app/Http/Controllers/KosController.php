@@ -13,14 +13,17 @@ class KosController extends Controller
     public function index()
     {
         $title = 'Halaman List Kos';
-        $kos = Kos::paginate(6);
-        return view(view: 'kos/listKos', data: compact('kos', 'title'));
+        $pemilik = Session::get('data_user');
+        if ($pemilik) {
+            $kos = Kos::where('pemilik_id', $pemilik->id)->paginate(6);
+            return view(view: 'kos/listKos', data: compact('kos', 'title'));
+        }
     }
 
     public function create()
     {
-        $pemilik = Pemilik::select('id', 'nama')->get();
-        return view('kos/addKos', ['pemilik' => $pemilik]);
+        $pemilik = Session::get('data_user');
+        return view('kos/addKos', compact('pemilik'));
     }
     public function store(Request $request)
     {
@@ -56,8 +59,8 @@ class KosController extends Controller
     public function edit($id)
     {
         $kos = Kos::with('pemilik')->findOrFail($id);
-        $pemilik = Pemilik::all();
-        return view('kos/editKos', ['kos' => $kos], ['pemilik' => $pemilik]);
+        $pemilik = Session::get('data_user');
+        return view('kos/editKos', compact('kos', 'pemilik'));
     }
 
     public function update(Request $request, $id)

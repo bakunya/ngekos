@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kontrak;
 use App\Models\Kos;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -13,7 +14,8 @@ class LaporanController extends Controller
     public function index()
     {
         $title = 'Halaman Laporan';
-        $kos = Kos::all();
+        $pemilik = Session::get('data_user'); // sesion user login
+        $kos = Kos::where('pemilik_id', $pemilik->id)->paginate(6);
         $kontrak = Kontrak::with('penyewa', 'kamar')->get();
         return view('laporan/laporan', compact('kontrak', 'title', 'kos'));
     }
@@ -51,8 +53,9 @@ class LaporanController extends Controller
             $kontrak->whereYear('tgl_bayar', $tahun);
         }
         if ($filter_kos) {
+            $pemilik = Session::get('data_user'); // session user login
             $kontrak->whereHas('kamar', function ($query) use ($filter_kos) {
-                $query->whereIn('kos_id', $filter_kos);
+                $query->where('kos_id', $filter_kos);
             });
         }
 
