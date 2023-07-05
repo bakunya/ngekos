@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('fasilitas');
             $table->string('harga');
             $table->string('status');
+            $table->string('gambar');
             $table->timestamps();
         });
     }

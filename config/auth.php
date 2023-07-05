@@ -67,11 +67,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Pemilik::class,
         ],
-
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
     ],
     /*
     |--------------------------------------------------------------------------

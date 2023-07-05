@@ -15,7 +15,11 @@
     <body>
         <div class="container mt-3">
             <h2>Add Kamar</h2>
-            <form action="/add-kamar/{{ $kos->id }}" method="post">
+            <form
+                action="/add-kamar/{{ $kos->id }}"
+                method="post"
+                enctype="multipart/form-data"
+            >
                 @csrf
                 <div>
                     <label for="nama">nama</label>
@@ -62,12 +66,16 @@
                     </div>
                     @enderror
                 </div>
-                <div>
+                <div hidden="yes">
                     <label for="status">status</label>
                     <select name="status" id="status" class="form-control">
                         <option value="belum disewa">Belum Disewa</option>
                         <option value="disewa">Disewa</option>
                     </select>
+                </div>
+                <div>
+                    <label for="gambar">gambar</label>
+                    <input class="form-control" type="file" name="gambar" />
                 </div>
                 <button class="btn btn-primary btn-lg mt-3">save</button>
             </form>

@@ -53,6 +53,18 @@ class KamarController extends Controller
         $kamar->harga = $request->harga;
         $kamar->status = $request->status;
         $kamar->kos_id = $id;
+        $namaFile = null;
+
+        // tambah gambar
+        if ($request->hasFile('gambar')) {
+            $gambar = $request->file('gambar');
+            if ($gambar) {
+                $extension = $gambar->getClientOriginalExtension();
+                $namaFile = $request->nama .  '_' . time() . '.' . $extension; // buat nama unique
+                $gambar->storeAs('public/gambar', $namaFile);
+            }
+        }
+        $kamar->gambar = $namaFile;
         $kamar->save();
 
         if ($kamar) {
@@ -66,7 +78,7 @@ class KamarController extends Controller
     public function edit($id)
     {
         $kamar = Kamar::with('kos')->findOrFail($id);
-        $kos = Kos::painate(6);
+        $kos = Kos::paginate(6);
         return view('kamar/editKamar', ['kamar' => $kamar], ['kos' => $kos]);
     }
 
@@ -78,7 +90,18 @@ class KamarController extends Controller
         $kamar->harga = $request->harga;
         $kamar->status = $request->status;
         $kamar->kos_id = $request->kos_id;
+        $namaFile = null;
 
+        // tambah gambar
+        if ($request->hasFile('gambar')) {
+            $gambar = $request->file('gambar');
+            if ($gambar) {
+                $extension = $gambar->getClientOriginalExtension();
+                $namaFile = $request->nama .  '_' . time() . '.' . $extension; // buat nama unique
+                $gambar->storeAs('public/gambar', $namaFile);
+            }
+        }
+        $kamar->gambar = $namaFile;
         $kamar->save();
 
         if ($kamar) {

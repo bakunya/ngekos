@@ -16,7 +16,7 @@ class KosController extends Controller
         $pemilik = Session::get('data_user');
         if ($pemilik) {
             $kos = Kos::where('pemilik_id', $pemilik->id)->paginate(6);
-            return view(view: 'kos/listKos', data: compact('kos', 'title'));
+            return view('kos/listKos', compact('kos', 'title'));
         }
     }
 

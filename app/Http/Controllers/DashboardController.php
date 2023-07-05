@@ -7,18 +7,15 @@ use App\Models\Kamar;
 use App\Models\Penyewa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\AuthController;
 
 
 
 
 class DashboardController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('auth');
-    }
+
     public function index(Request $req)
     {
         $title = 'halaman dashboard';
@@ -33,7 +30,8 @@ class DashboardController extends Controller
             ->count();
         $penyewa = Penyewa::all()->count();
         $pemilik = Session::get('data_user');
-
+        // $emailPemilik = $req->session()->get('data_user')->email;
         return view('dashboard/dashboard', compact('kamar', 'penyewa', 'kos', 'belumLunas', 'sudahLunas', 'title', 'pemilik'));
+        // return view('dashboard/dashboard', compact('kamar', 'penyewa', 'kos', 'belumLunas', 'sudahLunas', 'title', 'pemilik'));
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Pemilik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -41,12 +42,18 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // get user by email
-            // set data user on session
-            $request->session()->put('data_user', Auth::user());
+            $user = Auth::user();
+            $request->session()->put('data_user', $user);
             return redirect()->intended('/dashboard');
         } else {
             return back()->with('status', 'Email atau Password salah');
         }
+    }
+
+    function logout()
+    {
+        Auth::logout();
+        Session::forget('data_user');
+        return redirect('/login');
     }
 }

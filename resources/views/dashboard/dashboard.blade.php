@@ -61,6 +61,9 @@
                 </tbody>
             </table>
         </div>
+        <div>
+            <a href="/logout">LOGOUT    </a>
+        </div>
     </div>
 </div>
 @endsection
