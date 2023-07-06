@@ -6,12 +6,22 @@
             <!-- menu atas  -->
             <div class="d-flex justify-content-between">
                 <div class="">
-                    <a href="/add-kamar/{{ $kos->id }}" class="btn btn-primary">Tambah</a>
+                    <a href="/add-kamar/{{ $kos->id }}" class="btn btn-primary"
+                        >Tambah</a
+                    >
                 </div>
                 <div class="d-flex">
-                    <form action="/cari-kamar/{{ $kos->id }}" method="post" class="d-flex me-1">
+                    <form
+                        action="/cari-kamar/{{ $kos->id }}"
+                        method="post"
+                        class="d-flex me-1"
+                    >
                         @csrf
-                        <input type="text" name="cari" class="form-control me-1" />
+                        <input
+                            type="text"
+                            name="cariKamar"
+                            class="form-control me-1"
+                        />
                         <button class="btn btn-primary">
                             <i class="bi bi-search"></i>
                         </button>
@@ -61,18 +71,29 @@
                     <td>{{ $k->status }}</td>
                     <td>
                         @if ($k->gambar == null)
-                        <p>- </p>
+                        <p>-</p>
                         @else
-                        <img src="{{ asset('storage/gambar/' . $k->gambar) }}" width="150px" />
+                        <img
+                            src="{{ asset('storage/gambar/' . $k->gambar) }}"
+                            width="150px"
+                        />
                         @endif
                     </td>
                     <td style="width: 100px; white-space: nowrap">
                         <!-- <a href="#" class="btn btn-warning">Detail</a> -->
-                        <a href="/edit-kamar/{{ $k->id }}" class="btn btn-success">
-                            <i class="bi bi-pencil-fill"></i></a>
-                        <a href="/delete-kamar/{{ $k->id }}" onclick="return confirm('Hapus data {{ $k->nama }} ?')"
-                            class="btn btn-danger">
-                            <i class="bi bi-trash-fill"></i></a>
+                        <a
+                            href="/edit-kamar/{{ $k->id }}"
+                            class="btn btn-success"
+                        >
+                            <i class="bi bi-pencil-fill"></i
+                        ></a>
+                        <a
+                            href="/delete-kamar/{{ $k->id }}"
+                            onclick="return confirm('Hapus data {{ $k->nama }} ?')"
+                            class="btn btn-danger"
+                        >
+                            <i class="bi bi-trash-fill"></i
+                        ></a>
                     </td>
                 </tr>
             </tbody>

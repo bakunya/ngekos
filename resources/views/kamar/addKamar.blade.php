@@ -12,6 +12,7 @@
         />
         <title>kamar | tambah data</title>
     </head>
+
     <body>
         <div class="container mt-3">
             <h2>Add Kamar</h2>

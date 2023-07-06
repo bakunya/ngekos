@@ -71,7 +71,7 @@ Route::get('/download-pdf/{id}', [KontrakController::class, 'download_pdf']);
 Route::get('/laporan', [LaporanController::class, 'index']);
 Route::post('/filter_bulan', [LaporanController::class, 'filter_bulan']);
 Route::get('/laporan_pdf', [LaporanController::class, 'laporan_pdf']);
-Route::get('/cari-transaksi', [LaporanController::class, 'cari']);
+Route::get('/cari-laporan', [LaporanController::class, 'cari']);
 
 // dashboard    
 // Route::get('/dashboard', [DashboardController::class, 'index']);

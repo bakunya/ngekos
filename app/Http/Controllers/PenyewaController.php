@@ -10,11 +10,9 @@ use Illuminate\Support\Facades\Session;
 
 class PenyewaController extends Controller
 {
-
     public function index()
     {
         $title = 'Halaman List Penyewa';
-        $cari_penyewa = session('cari_penyewa');
         $penyewa = Penyewa::paginate(6);
         return view('penyewa/listPenyewa', compact('penyewa', 'title'));
     }
@@ -108,21 +106,19 @@ class PenyewaController extends Controller
 
     public function cari(Request $request)
     {
-
         $title = 'Halaman List Penyewa';
-        $cari = $request->cari;
+        $cariPenyewa = $request->cariPenyewa;
 
-        if (isset($cari)) {
-            $penyewa = Penyewa::where('nama', 'like', "%" . $cari . "%")
-                ->orWhere('nik', 'like', "%" . $cari . "%")
-                ->orWhere('alamat', 'like', "%" . $cari . "%")
-                ->orWhere('email', 'like', "%" . $cari . "%")
+        if (isset($cariPenyewa)) {
+            $penyewa = Penyewa::where('nama', 'like', "%" . $cariPenyewa . "%")
+                ->orWhere('nik', 'like', "%" . $cariPenyewa . "%")
+                ->orWhere('alamat', 'like', "%" . $cariPenyewa . "%")
+                ->orWhere('email', 'like', "%" . $cariPenyewa . "%")
                 ->paginate(5);
         } else {
             $penyewa = Penyewa::paginate(6);
         }
 
-        session(['cari_penyewa' => $request->cari]);
-        return view('penyewa/listPenyewa', compact('penyewa', 'cari', 'title'));
+        return view('penyewa/listPenyewa', compact('penyewa', 'cariPenyewa', 'title'));
     }
 }

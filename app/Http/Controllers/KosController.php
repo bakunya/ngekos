@@ -12,6 +12,7 @@ class KosController extends Controller
 {
     public function index()
     {
+        Session::forget('cariPenyewa'); // hapus sesi side bar aktif
         $title = 'Halaman List Kos';
         $pemilik = Session::get('data_user');
         if ($pemilik) {
@@ -103,16 +104,16 @@ class KosController extends Controller
     public function cari(Request $request)
     {
         $title = 'Halaman List Kos';
-        $cari = $request->cari;
+        $cariKos = $request->cariKos;
 
-        if (isset($request->cari)) {
-            $kos = Kos::where('nama', 'like', "%" . $cari . "%")
-                ->orWhere('alamat', 'like', "%" . $cari . "%")
-                ->get();
+        if (isset($request->cariKos)) {
+            $kos = Kos::where('nama', 'like', "%" . $cariKos . "%")
+                ->orWhere('alamat', 'like', "%" . $cariKos . "%")
+                ->paginate(6);
         } else {
-            return $this->index();
+            $kos = Kos::paginate(6);
         }
 
-        return view('kos/listKos', compact('kos', 'title', 'cari'));
+        return view('kos.listKos', compact('kos', 'title', 'cariKos'));
     }
 }

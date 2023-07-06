@@ -18,8 +18,8 @@
                     >
                         <input
                             type="text"
-                            name="cari"
-                            id="cari"
+                            name="cariPenyewa"
+                            id="cariPenyewa"
                             class="form-control me-1"
                         />
                         <button class="btn btn-primary">

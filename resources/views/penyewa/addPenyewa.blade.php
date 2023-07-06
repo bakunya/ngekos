@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="container mt-4">
-            <h2>Add Penyeawa</h2>
+            <h2>Tambah Penyeawa</h2>
             <form action="add-penyewa" method="post">
                 @csrf
                 <div>

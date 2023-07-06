@@ -4,7 +4,7 @@
         <h2>Laporan</h2>
         <!-- menu atas  -->
         <div class="">
-            <form action="/cari-transaksi" method="get" class="">
+            <form action="/cari-laporan" method="get">
                 {{-- cari --}}
                 <div class="d-flex">
                     <input type="text" name="cari" class="form-control me-1" />
@@ -21,7 +21,7 @@
                         <select name="bulan" class="form-control mb-2 mt-3">
                             <option value="">Pilih Bulan</option>
                             @for ($i = 1; $i <= 12; $i++) <option value="{{ $i }}">
-                                {{ date("F", mktime(0, 0, 0, $i, 1)) }}
+                                {{ date('F', mktime(0, 0, 0, $i, 1)) }}
                                 </option>
                                 @endfor
                         </select>
@@ -84,7 +84,7 @@
                 <td>{{ $k->tgl_bayar }}</td>
                 <td>Rp {{ $k->kamar->harga }}</td>
 
-                <td class="color : {{ $k->status === 'sudah lunas' ? 'success-text' : 'danger-text'}}">
+                <td class="color : {{ $k->status === 'sudah lunas' ? 'success-text' : 'danger-text' }}">
                     {{ $k->status }}
                 </td>
             </tr>

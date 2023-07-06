@@ -102,6 +102,7 @@ class KamarController extends Controller
             }
         }
         $kamar->gambar = $namaFile;
+
         $kamar->save();
 
         if ($kamar) {
@@ -136,17 +137,17 @@ class KamarController extends Controller
     public function cari(Request $request, Kos $kos)
     {
         $title = 'Halaman List Kamar';
-        $cari = $request->cari;
+        $cariKamar = $request->cariKamar;
 
-        if (isset($cari)) {
-            $kamar = Kamar::where('nama', 'like', "%" . $cari . "%")
+        if (isset($cariKamar)) {
+            $kamar = Kamar::where('nama', 'like', "%" . $cariKamar . "%")
                 ->where('kos_id', $kos->id)
-                ->orWhere('status', 'like', "%" . $cari . "%")
-                ->get();
+                ->orWhere('status', 'like', "%" . $cariKamar . "%")
+                ->paginate(6);
         } else {
             return $this->index($kos->id);
         }
 
-        return view(view: 'kamar/listKamar', data: compact('kamar', 'kos', 'cari', 'title'))->with('pesan', 'Data tidak ditemukan');
+        return view('kamar/listKamar', compact('kamar', 'kos', 'cariKamar', 'title'))->with('pesan', 'Data tidak ditemukan');
     }
 }
