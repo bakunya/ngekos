@@ -10,14 +10,23 @@
             integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
             crossorigin="anonymous"
         />
-        <title>Pemilik | edit {{ $pemilik->nama }}</title>
+        <title>Penyewa | edit {{ $penyewa->nama }}</title>
     </head>
     <body>
-        <div class="container mt-3">
-            <h2>Edit Pemilik</h2>
-            <form action="/update-pemilik/{{ $pemilik->id }}" method="post">
+        <div class="container mt-4">
+            <h2>Edit Penyewa</h2>
+            <form action="/update-penyewa/{{ $penyewa->id }}" method="post">
                 @csrf
-
+                <div>
+                    <label for="nik">nik</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        name="nik"
+                        id="nik"
+                        value="{{ $penyewa->nik }}"
+                    />
+                </div>
                 <div>
                     <label for="nama">nama</label>
                     <input
@@ -25,7 +34,7 @@
                         type="text"
                         name="nama"
                         id="nama"
-                        value="{{ $pemilik->nama }}"
+                        value="{{ $penyewa->nama }}"
                     />
                 </div>
                 <div>
@@ -35,7 +44,7 @@
                         type="text"
                         name="email"
                         id="email"
-                        value="{{ $pemilik->email }}"
+                        value="{{ $penyewa->email }}"
                     />
                 </div>
                 <div>
@@ -45,17 +54,17 @@
                         type="text"
                         name="alamat"
                         id="alamat"
-                        value="{{ $pemilik->alamat }}"
+                        value="{{ $penyewa->alamat }}"
                     />
                 </div>
                 <div>
-                    <label for="alamat">password</label>
+                    <label for="no_telp">nomor HP </label>
                     <input
                         class="form-control"
                         type="text"
-                        name="password"
-                        id="password"
-                        required
+                        name="no_telp"
+                        id="no_telp"
+                        value="{{ $penyewa->no_telp  }}"
                     />
                 </div>
                 <button class="btn btn-primary btn-lg mt-3">save</button>

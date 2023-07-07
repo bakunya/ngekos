@@ -20,9 +20,8 @@
                 <!-- menu atas -->
                 <div class="d-flex justify-content-between">
                     <div class="">
-                        <a href="/add-pemilik" class="btn btn-primary"
-                            >Tambah</a
-                        >
+                        <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+                        <a href="/add-pemilik" class="btn btn-primary">Tambah</a>
                     </div>
                     <div class="d-flex">
                         <form
