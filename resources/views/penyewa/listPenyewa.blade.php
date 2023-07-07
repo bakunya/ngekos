@@ -3,7 +3,7 @@
     <div class="row">
         <!-- content -->
         <div class="mt-4 p-0">
-            <h2>Data Penyeawa</h2>
+            <h2>Data Penyewa</h2>
 
             <!-- menu atas -->
             <div class="d-flex justify-content-between mb-2">
