@@ -37,7 +37,7 @@
             <div>
                 <label for="gambar">gambar</label>
                 <input class="form-control" type="file" name="gambar" id="gambar" />
-                <img class="mt-3" src="{{ asset('storage/gambar/' . $kamar->gambar) }}" width="150px"
+                <img class="mt-3" src="{{ url('img/' . $kamar->gambar) }}" width="150px"
                     value="{{ $kamar->gambar }}" />
             </div>
             <div hidden>

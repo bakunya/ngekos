@@ -15,7 +15,7 @@
                             ? 'active'
                             : 'bg-dark text-white' }}">
                 <i class="fas fa-chart-area fa-fw me-3"></i>
-                <span>Penyeawa</span>
+                <span>Penyewa</span>
             </a>
             <a href="/kos" class="
                         list-group-item list-group-item-action py-2 ripple 

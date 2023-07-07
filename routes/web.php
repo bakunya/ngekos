@@ -9,6 +9,7 @@ use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\KontrakController;
+use App\Http\Controllers\UploadImageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -88,3 +89,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     // ...
 });
+
+
+Route::get("/img/{img}", [UploadImageController::class, "index"]);
