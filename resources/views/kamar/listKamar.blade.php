@@ -74,7 +74,7 @@
                         <p>-</p>
                         @else
                         <img
-                            src="{{ asset('storage/gambar/' . $k->gambar) }}"
+                            src="{{ url('img/' . $k->gambar) }}"
                             width="150px"
                         />
                         @endif

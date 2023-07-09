@@ -10,16 +10,17 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        Auth::shouldUse('pemilik');
-    }
+    // public function __construct()
+    // {
+    //     Auth::shouldUse('pemilik');
+    // }
 
     function index()
     {
         $title = 'register';
         return view('auth/register', compact('title'));
     }
+
     function store(Request $request)
     {
         $pemilik = new Pemilik;
@@ -31,23 +32,17 @@ class AuthController extends Controller
         $pemilik->save();
         return redirect('/login');
     }
+
     function login()
     {
         return view('auth/login');
     }
-    function authenticate(Request $request)
+
+    function authenticate(Request $req)
     {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            $user = Auth::user();
-            $request->session()->put('data_user', $user);
-            return redirect()->intended('/dashboard');
-        } else {
-            return back()->with('status', 'Email atau Password salah');
-        }
+		if (!Auth::attempt($req->only('email', 'password'))) return back()->with('error', 'Password atau Email salah');
+		$req->session()->put('data_user', Auth::user());
+		return redirect()->intended('/dashboard');
     }
 
     function logout()

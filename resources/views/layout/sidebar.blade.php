@@ -8,6 +8,13 @@
                 <i class="fas fa-tachometer-alt fa-fw me-3"></i>
                 <span>Dashboard</span>
             </a>
+            <a href="/pemilik"
+                class="list-group-item list-group-item-action py-2 ripple 
+                    {{ collect(explode('/', url()->current()))->pop() === 'pemilik' ? 'active' : 'bg-dark text-white' }}"
+                aria-current="true">
+                <i class="fas fa-tachometer-alt fa-fw me-3"></i>
+                <span>Admin</span>
+            </a>
             <a href="/penyewa" class="list-group-item list-group-item-action py-2 ripple  
                         {{ collect(explode('/', url()->current()))->pop() === 'penyewa' ||
                         collect(explode('/', url()->current()))->contains('penyewa') ||
@@ -15,7 +22,7 @@
                             ? 'active'
                             : 'bg-dark text-white' }}">
                 <i class="fas fa-chart-area fa-fw me-3"></i>
-                <span>Penyeawa</span>
+                <span>Penyewa</span>
             </a>
             <a href="/kos" class="
                         list-group-item list-group-item-action py-2 ripple 

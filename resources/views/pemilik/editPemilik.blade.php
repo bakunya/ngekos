@@ -48,6 +48,16 @@
                         value="{{ $pemilik->alamat }}"
                     />
                 </div>
+                <div>
+                    <label for="alamat">password</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        name="password"
+                        id="password"
+                        required
+                    />
+                </div>
                 <button class="btn btn-primary btn-lg mt-3">save</button>
             </form>
         </div>
